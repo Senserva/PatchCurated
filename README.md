@@ -4,16 +4,15 @@
 
 [![MISA Member](https://img.shields.io/badge/Microsoft%20MISA-Member-0078D4?logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
 
-![Status](https://img.shields.io/badge/status-in%20development-orange)
-
-> **⚠️ Early Development** — PatchCurated is actively being built. Features, commands, output formats, and APIs are subject to change. Feedback and contributions welcome.
-
+[![MISA Member](https://img.shields.io/badge/MISA_Member-Microsoft_Intelligent_Security_Association-0078d4?style=flat&logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
 
 PatchCurated is an open patch data repository and the builder that populates it. It aggregates security update metadata, detection rules, supersedence chains, and CVE enrichment from **38 sources** into a single portable SQLite database — covering ~25,000+ applications across all three major platforms.
 
-The database is the open data layer that [PatchCured]([https://github.com/patchcured](https://github.com/Senserva/PatchCured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
+The database is the open data layer that [PatchCured](https://github.com/patchcured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
 
-Built by [Mark Shavlik](https://github.com/markshav), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry. A [Senserva](https://senserva.com) project — a member of the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only ecosystem of independent software vendors building security solutions on Microsoft technology.
+PatchCurated and PatchCured work as standalone solutions or alongside your existing patching tools — complementing products like Ivanti, SCCM, Intune, and others with open, vendor-neutral data and scanning that isn't tied to any one vendor's ecosystem.
+
+Built by [Mark Shavlik](https://github.com/shavmark), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry. A [Senserva](https://senserva.com) project — a member of the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only ecosystem of independent software vendors building security solutions on Microsoft technology.
 
 ---
 
