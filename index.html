@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIABSAAAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgCAAAAkJFoNgAAABlJREFUeJxjZJAOYiAFMJGkelTDqIYhpQEAgMMAjSfswpUAAAAASUVORK5CYII=">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PatchCured — Find the Gaps. Cure It. Move On.</title>
-  <meta name="description" content="Free patch scanner for Windows, macOS, and Linux. No agent. No cloud account. No config. Missing patches, security misconfigurations, and suspicious events in one pass.">
-  <link rel="canonical" href="https://patchcured.com">
+  <title>PatchCurated — Open Patch Intelligence for Windows, macOS &amp; Linux</title>
+  <meta name="description" content="Open patch database and free scanner covering 25,000+ applications. Built by the creator of HFNetChk and MBSA. A Senserva project — Microsoft MISA member.">
+  <link rel="canonical" href="https://patchcurated.org">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -28,17 +28,16 @@
     svg { flex-shrink: 0; overflow: visible; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Ubuntu', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; line-height: 1.6; }
-
     body::after {
       content: ''; position: fixed; inset: 0;
       background-image: linear-gradient(var(--border) 1px,transparent 1px), linear-gradient(90deg,var(--border) 1px,transparent 1px);
-      background-size: 48px 48px; pointer-events: none; z-index: 0; opacity: .2;
+      background-size: 48px 48px; pointer-events: none; z-index: 0; opacity: .25;
     }
-    section, nav, footer, .top-bar { position: relative; z-index: 1; }
+    section, nav, footer, .top-bar, .tab-section { position: relative; z-index: 1; }
 
     /* ── TOP BAR ── */
     .top-bar {
-      background: var(--navy); border-bottom: 1px solid rgba(128,188,0,.2);
+      background: var(--navy); border-bottom: 1px solid rgba(128,188,0,.22);
       padding: 7px var(--pad);
       display: flex; align-items: center; justify-content: space-between;
       font-size: .72rem; color: rgba(255,255,255,.5); letter-spacing: .03em;
@@ -50,23 +49,31 @@
     /* ── NAV ── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px var(--pad); border-bottom: 1px solid var(--border);
+      padding: 16px var(--pad); border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 100;
-      background: rgba(13,17,23,.92);
+      background: rgba(13,17,23,.9);
     }
-    .nav-links { display: flex; gap: 26px; list-style: none; align-items: center; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .83rem; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: var(--green); }
-    .nav-cta { background: var(--green) !important; color: var(--dark) !important; padding: 7px 16px; border-radius: 6px; font-weight: 700 !important; }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Ubuntu', sans-serif; font-weight: 800; font-size: 1.05rem;
+      text-decoration: none; color: var(--text); flex-shrink: 0;
+    }
+    .nav-logo .patch { color: white; }
+    .nav-logo .curated { color: var(--green); }
+    .nav-logo .tld { color: rgba(255,255,255,.28); font-weight: 400; font-size: .78rem; }
+    nav ul { display: flex; gap: 26px; list-style: none; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: .83rem; font-weight: 500; transition: color .2s; }
+    nav ul a:hover { color: var(--green); }
+    .nav-cta { background: var(--green); color: var(--dark) !important; padding: 7px 16px; border-radius: 6px; font-weight: 700 !important; }
     .nav-cta:hover { opacity: .88; }
 
     /* ── SHARED ── */
-    section { padding: 80px var(--pad); }
-    .label { font-family: 'Ubuntu Mono', monospace; font-size: .67rem; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; display: block; }
-    h2 { font-family: 'Ubuntu', sans-serif; font-weight: 700; font-size: clamp(1.7rem,3vw,2.4rem); letter-spacing: -.02em; line-height: 1.15; margin-bottom: 12px; }
-    .sub { color: var(--muted); font-size: .95rem; font-weight: 300; max-width: 540px; line-height: 1.75; margin-bottom: 44px; }
-    .btn { display: inline-block; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: .88rem; padding: 11px 22px; transition: transform .15s, box-shadow .15s, opacity .15s; font-family: 'Ubuntu', sans-serif; }
-    .btn-g { background: var(--green); color: var(--dark); font-weight: 700; }
+    section { padding: 88px var(--pad); }
+    .label { font-family: 'Ubuntu Mono', monospace; font-size: .67rem; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    h2 { font-family: 'Ubuntu', sans-serif; font-weight: 700; font-size: clamp(1.7rem,3vw,2.5rem); letter-spacing: -.025em; line-height: 1.1; margin-bottom: 12px; }
+    .sub { color: var(--muted); font-size: .97rem; font-weight: 300; max-width: 540px; line-height: 1.7; margin-bottom: 48px; }
+    .btn { display: inline-block; text-decoration: none; border-radius: 7px; font-weight: 600; font-size: .88rem; padding: 11px 22px; transition: transform .15s, box-shadow .15s, opacity .15s; }
+    .btn-g { background: var(--green); color: var(--dark); }
     .btn-g:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(128,188,0,.3); }
     .btn-o { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,.18); }
     .btn-o:hover { border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.04); }
@@ -75,64 +82,64 @@
     code { font-family: 'Ubuntu Mono', monospace; font-size: .82em; color: var(--green); }
 
     /* ── HERO ── */
-    .hero {
-      min-height: 90vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding-top: 72px; padding-bottom: 56px;
-      position: relative; overflow: hidden;
-    }
-    .hero-glow {
-      position: absolute; width: 800px; height: 800px; border-radius: 50%;
-      background: radial-gradient(circle,rgba(128,188,0,.1) 0%,transparent 65%);
-      top: -200px; right: -100px; pointer-events: none;
-    }
+    .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 72px; padding-bottom: 56px; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle,rgba(128,188,0,.12) 0%,transparent 68%); top: -180px; right: -60px; pointer-events: none; }
+    .hero-glow2 { position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle,rgba(0,27,82,.55) 0%,transparent 70%); bottom: -80px; left: -60px; pointer-events: none; }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(128,188,0,.08); border: 1px solid rgba(128,188,0,.24);
+      background: rgba(128,188,0,.08); border: 1px solid rgba(128,188,0,.26);
       color: var(--green); font-family: 'Ubuntu Mono', monospace;
-      font-size: .68rem; letter-spacing: .08em; padding: 5px 14px;
-      border-radius: 100px; margin-bottom: 28px;
+      font-size: .7rem; letter-spacing: .08em; padding: 5px 14px;
+      border-radius: 100px; margin-bottom: 26px; width: fit-content;
     }
-    .hero-pill .pulse { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+    .hero-pill .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
-
-    h1 {
-      font-family: 'Ubuntu', sans-serif; font-weight: 700;
-      font-size: clamp(2.8rem,5.5vw,5.2rem); line-height: 1.04;
-      letter-spacing: -.03em; max-width: 820px; margin-bottom: 24px;
-      font-stretch: normal;
-    }
+    h1 { font-family: 'Ubuntu', sans-serif; font-weight: 800; font-size: clamp(2.6rem,5.5vw,5rem); line-height: 1.04; letter-spacing: -.03em; max-width: 860px; margin-bottom: 22px; font-stretch: normal; }
     h1 .accent { color: var(--green); }
-    h1 .dim { color: rgba(255,255,255,.25); }
-    .hero-sub {
-      font-size: clamp(.94rem,1.4vw,1.08rem); color: var(--muted);
-      max-width: 560px; line-height: 1.75; margin-bottom: 36px; font-weight: 300;
-    }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; align-items: center; }
+    h1 .dim { color: rgba(255,255,255,.28); }
+    .hero-sub { font-size: clamp(.95rem,1.5vw,1.12rem); color: var(--muted); max-width: 580px; line-height: 1.7; margin-bottom: 36px; font-weight: 300; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 60px; align-items: center; }
+    .stats-row { display: flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; max-width: 880px; background: rgba(255,255,255,.02); flex-wrap: wrap; align-items: stretch; }
+    .stat { flex: 1; min-width: 120px; padding: 18px 24px; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-family: 'Ubuntu', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--green); line-height: 1; margin-bottom: 4px; display: block; width: fit-content; }
+    .stat-l { font-size: .68rem; color: var(--muted); letter-spacing: .07em; text-transform: uppercase; }
 
-    /* ── REQUIREMENT STRIP ── */
-    .req-strip {
-      display: flex; gap: 0; flex-wrap: wrap;
-      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-      max-width: 680px; background: rgba(255,255,255,.02);
+    /* ── SENSERVA CALLOUT ── */
+    .senserva-callout {
+      background: linear-gradient(135deg,rgba(0,27,82,.95) 0%,rgba(0,15,50,.8) 100%);
+      border: 1px solid rgba(128,188,0,.22); border-radius: 12px;
+      padding: 40px 44px; display: grid; grid-template-columns: 1fr auto;
+      gap: 36px; align-items: start; max-width: 1100px; margin-top: 56px;
     }
-    .req { padding: 12px 20px; border-right: 1px solid var(--border); flex: 1; min-width: 120px; }
-    .req:last-child { border-right: none; }
-    .req-v { font-family: 'Ubuntu Mono', monospace; font-size: .82rem; color: var(--green); display: block; margin-bottom: 2px; }
-    .req-l { font-size: .67rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .senserva-callout h3 { font-family: 'Ubuntu', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 10px; }
+    .senserva-callout p { color: rgba(255,255,255,.6); font-size: .88rem; line-height: 1.65; max-width: 540px; }
+    .sc-products { display: flex; flex-direction: column; gap: 10px; min-width: 200px; align-items: stretch; }
+    .sc-product { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 8px; padding: 12px 16px; text-decoration: none; transition: border-color .2s, background .2s; display: block; }
+    .sc-product:hover { border-color: var(--green); background: rgba(128,188,0,.06); }
+    .sc-product .pn { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .86rem; color: white; margin-bottom: 3px; }
+    .sc-product .pd { font-size: .72rem; color: rgba(255,255,255,.42); }
+    .sc-product .pb { display: inline-block; font-family: 'Ubuntu Mono', monospace; font-size: .58rem; padding: 2px 7px; border-radius: 3px; margin-top: 5px; background: rgba(128,188,0,.12); color: var(--green); align-self: flex-start; }
 
-    /* ── THREE-UP FEATURE ── */
-    .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; max-width: 1100px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .feat { background: var(--card); padding: 28px 26px; border-right: 1px solid var(--border); }
-    .feat:last-child { border-right: none; }
-    .feat-tag { font-family: 'Ubuntu Mono', monospace; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; display: block; }
-    .feat h3 { font-family: 'Ubuntu', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; letter-spacing: -.01em; }
-    .feat p { color: var(--muted); font-size: .82rem; line-height: 1.6; }
+    /* ── TAB SECTION (PatchCurated / PatchCured) ── */
+    .tab-section { background: rgba(255,255,255,.016); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .tab-section > .inner { padding: 88px var(--pad); display: block; }
+    .tabs { display: flex; gap: 4px; margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 0; align-items: flex-end; }
+    .tab-btn {
+      font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .9rem;
+      padding: 12px 24px; background: none; border: none; cursor: pointer;
+      color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color .2s, border-color .2s;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-btn:hover { color: var(--text); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
 
     /* ── TERMINAL ── */
-    .terminal { background: #070c10; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .terminal { background: #080d12; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
     .term-bar { background: #111820; padding: 9px 16px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
-    .tdot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
     .dr{background:#FF5F57} .dy{background:#FFBD2E} .dg{background:#28C840}
     .term-title { font-family: 'Ubuntu Mono', monospace; font-size: .67rem; color: var(--muted); margin-left: auto; }
     .term-body { padding: 18px 20px; font-family: 'Ubuntu Mono', monospace; font-size: .79rem; line-height: 1.9; }
@@ -145,13 +152,33 @@
     .tcm::before { content:'# '; }
     .tcm { color: rgba(255,255,255,.22); }
 
-    /* ── TWO COL ── */
+    /* ── GRIDS ── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; align-items: start; }
+    .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 1100px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; transition: border-color .2s; }
+    .card:hover { border-color: rgba(128,188,0,.35); }
+    .card h3 { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .92rem; margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: .81rem; line-height: 1.55; }
 
-    /* ── CHECKS ── */
+    /* ── COVERAGE ── */
+    .cov-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; max-width: 960px; }
+    .cov-cell { background: var(--card); padding: 26px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cov-cell:nth-child(3n) { border-right: none; }
+    .cov-cell:nth-last-child(-n+3) { border-bottom: none; }
+    .cov-plat { font-family: 'Ubuntu Mono', monospace; font-size: .63rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .cov-num { font-family: 'Ubuntu', sans-serif; font-weight: 800; font-size: 2rem; line-height: 1; margin-bottom: 5px; display: block; }
+    .cov-desc { color: var(--muted); font-size: .79rem; line-height: 1.4; }
+    .tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag { font-family: 'Ubuntu Mono', monospace; font-size: .6rem; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,.06); color: rgba(255,255,255,.5); }
+    .tg-g { background: rgba(128,188,0,.1); color: var(--green); }
+    .tg-b { background: rgba(27,117,188,.13); color: #64b0e8; }
+    .tg-t { background: rgba(70,194,203,.1); color: var(--teal); }
+    .tg-o { background: rgba(235,119,38,.1); color: var(--orange); }
+
+    /* ── CHECKS TABLE ── */
     .checks-wrap { max-width: 1100px; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: .83rem; }
-    th { font-family: 'Ubuntu Mono', monospace; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { font-family: 'Ubuntu Mono', monospace; font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
     td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); vertical-align: top; line-height: 1.45; }
     td:first-child { font-family: 'Ubuntu Mono', monospace; color: var(--teal); font-size: .75rem; white-space: nowrap; }
     tr:last-child td { border-bottom: none; }
@@ -159,84 +186,91 @@
     .sev-i { color: #f5c842; }
     .sev-m { color: var(--teal); }
 
-    /* ── CMD GRID ── */
-    .cmd-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 12px; max-width: 1100px; }
-    .cmd-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; transition: border-color .2s; }
+    /* ── SCHEMA BOX ── */
+    .schema-box { background: #080d12; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .schema-hdr { background: #111820; padding: 10px 18px; font-family: 'Ubuntu Mono', monospace; font-size: .66rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .schema-body { padding: 16px 20px; font-family: 'Ubuntu Mono', monospace; font-size: .75rem; line-height: 1.95; }
+    .kw{color:#c792ea} .sf{color:#82aaff} .st{color:var(--teal)} .sv{color:var(--orange)} .sc{color:rgba(255,255,255,.22)}
+
+    /* ── COMMANDS ── */
+    .cmd-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 13px; max-width: 1100px; }
+    .cmd-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; transition: border-color .2s; }
     .cmd-card:hover { border-color: rgba(128,188,0,.36); }
-    .cmd-name { font-family: 'Ubuntu Mono', monospace; font-size: .78rem; color: var(--green); margin-bottom: 7px; display: block; }
-    .cmd-card p { color: var(--muted); font-size: .8rem; line-height: 1.55; }
+    .cmd-name { font-family: 'Ubuntu Mono', monospace; font-size: .78rem; color: var(--green); margin-bottom: 7px; }
+    .cmd-card p { color: var(--muted); font-size: .8rem; line-height: 1.5; }
     .flags { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 5px; }
     .flag { font-family: 'Ubuntu Mono', monospace; font-size: .6rem; padding: 2px 8px; border-radius: 4px; background: rgba(70,194,203,.08); color: var(--teal); }
 
-    /* ── AI SECTION ── */
-    .ai-panel {
-      background: linear-gradient(135deg, rgba(0,27,82,.8) 0%, rgba(13,17,23,.9) 100%);
-      border: 1px solid rgba(128,188,0,.2); border-radius: 10px;
-      padding: 40px 44px; max-width: 1100px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
-    }
-    .ai-panel h2 { margin-bottom: 10px; }
-    .ai-options { display: flex; flex-direction: column; gap: 10px; }
-    .ai-opt { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
-    .ai-opt-label { font-family: 'Ubuntu Mono', monospace; font-size: .63rem; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; display: block; }
-    .ai-opt h4 { font-size: .88rem; font-weight: 600; margin-bottom: 5px; }
-    .ai-opt p { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; }
+    .step { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-n { font-family: 'Ubuntu Mono', monospace; font-size: .67rem; color: var(--green); min-width: 26px; margin-top: 2px; }
+    .step h3 { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .9rem; margin-bottom: 5px; }
+    .step p { color: var(--muted); font-size: .81rem; line-height: 1.55; }
 
-    /* ── ORIGIN / ABOUT ── */
-    .quote-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      border-radius: 0 8px 8px 0; padding: 26px 28px;
-    }
-    .quote-card blockquote { font-size: .97rem; line-height: 1.7; margin-bottom: 16px; font-weight: 300; font-style: italic; }
-    .quote-attr { font-size: .74rem; color: var(--muted); }
-    .quote-attr strong { color: var(--text); display: block; margin-bottom: 2px; font-style: normal; }
+    /* ── CONTRIBUTE ── */
+    .iface-box { background: #080d12; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .iface-hdr { background: #111820; padding: 10px 18px; font-family: 'Ubuntu Mono', monospace; font-size: .67rem; color: var(--green); letter-spacing: .06em; border-bottom: 1px solid var(--border); }
+    .iface-body { padding: 16px 20px; font-family: 'Ubuntu Mono', monospace; font-size: .75rem; line-height: 1.9; }
+    .wanted { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .wanted li { display: flex; gap: 10px; font-size: .84rem; line-height: 1.5; color: var(--muted); }
+    .wanted li::before { content:'→'; color: var(--green); font-family: 'Ubuntu Mono', monospace; font-size: .76rem; margin-top: 2px; flex-shrink: 0; }
+    .wanted strong { color: var(--text); }
 
-    /* ── SENSERVA CARD ── */
-    .senserva-card {
-      background: linear-gradient(135deg,rgba(0,27,82,.9) 0%,rgba(0,15,48,.8) 100%);
-      border: 1px solid rgba(128,188,0,.2); border-radius: 8px; padding: 22px 24px;
-    }
-    .senserva-card .sc-label { font-family: 'Ubuntu Mono', monospace; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; display: block; }
-    .senserva-card h4 { font-weight: 700; font-size: .96rem; margin-bottom: 8px; }
-    .senserva-card p { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.65; margin-bottom: 14px; }
+    /* ── ORIGIN / TIMELINE ── */
+    .tl { display: flex; flex-direction: column; }
+    .tl-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-yr { font-family: 'Ubuntu Mono', monospace; font-size: .68rem; color: var(--green); min-width: 38px; margin-top: 2px; }
+    .tl-item h3 { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .86rem; margin-bottom: 4px; }
+    .tl-item p { color: var(--muted); font-size: .79rem; line-height: 1.5; }
+    .quote-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 0 10px 10px 0; padding: 26px 28px; }
+    .quote-card blockquote { font-family: 'Ubuntu', sans-serif; font-size: 1rem; line-height: 1.65; margin-bottom: 18px; }
+    .quote-attr { font-size: .76rem; color: var(--muted); }
+    .quote-attr strong { color: var(--text); display: block; margin-bottom: 2px; }
+    .senserva-card { background: linear-gradient(135deg,rgba(0,27,82,.9) 0%,rgba(0,15,48,.8) 100%); border: 1px solid rgba(128,188,0,.2); border-radius: 10px; padding: 22px 24px; margin-top: 20px; }
+    .senserva-card .sc-label { font-family: 'Ubuntu Mono', monospace; font-size: .63rem; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+    .senserva-card h4 { font-family: 'Ubuntu', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .senserva-card p { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.6; margin-bottom: 14px; }
 
     /* ── CTA ── */
-    .cta {
-      text-align: center; padding: 88px var(--pad);
-      background: radial-gradient(ellipse at center,rgba(0,27,82,.4) 0%,transparent 65%);
-      border-top: 1px solid var(--border);
-    }
+    .cta { text-align: center; padding: 88px var(--pad); background: radial-gradient(ellipse at center,rgba(0,27,82,.45) 0%,transparent 65%); border-top: 1px solid var(--border); }
     .cta h2 { margin: 0 auto 12px; }
-    .cta p { color: var(--muted); max-width: 420px; margin: 0 auto 32px; font-size: .92rem; }
+    .cta p { color: var(--muted); max-width: 440px; margin: 0 auto 32px; font-size: .93rem; }
     .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* ── FOOTER ── */
-    footer { background: rgba(0,27,82,.25); border-top: 1px solid var(--border); padding: 40px var(--pad) 28px; }
+    footer { background: rgba(0,27,82,.28); border-top: 1px solid var(--border); padding: 40px var(--pad) 28px; }
     .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-    .footer-brand p { font-size: .75rem; color: var(--muted); max-width: 210px; line-height: 1.65; margin-top: 10px; }
+    .footer-brand .logo { font-family: 'Ubuntu', sans-serif; font-weight: 800; font-size: .9rem; margin-bottom: 7px; }
+    .footer-brand .logo .patch{color:white} .footer-brand .logo .curated{color:var(--green)}
+    .footer-brand p { font-size: .76rem; color: var(--muted); max-width: 220px; line-height: 1.6; }
     .footer-cols { display: flex; gap: 44px; flex-wrap: wrap; }
-    .footer-col h5 { font-family: 'Ubuntu', sans-serif; font-weight: 500; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.45); margin-bottom: 10px; }
+    .footer-col h5 { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.5); margin-bottom: 10px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
     .footer-col ul a { color: var(--muted); text-decoration: none; font-size: .78rem; transition: color .2s; }
     .footer-col ul a:hover { color: var(--green); }
     .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; align-items: center; }
-    .footer-bottom p { font-size: .68rem; color: rgba(255,255,255,.2); }
+    .footer-bottom p { font-size: .7rem; color: rgba(255,255,255,.22); }
     .fbadges { display: flex; gap: 7px; }
-    .fbadge { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; font-family: 'Ubuntu Mono', monospace; font-size: .6rem; }
+    .fbadge { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; font-family: 'Ubuntu Mono', monospace; font-size: .62rem; }
     .fbk { background: rgba(255,255,255,.05); color: var(--muted); padding: 3px 8px; }
-    .fbv-g { background: rgba(128,188,0,.1); color: var(--green); padding: 3px 8px; }
+    .fbv-g { background: rgba(128,188,0,.11); color: var(--green); padding: 3px 8px; }
     .fbv-b { background: rgba(70,194,203,.1); color: var(--teal); padding: 3px 8px; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       :root { --pad: 20px; }
-      .nav-links { display: none; }
-      .two-col, .ai-panel { grid-template-columns: 1fr; }
-      .three-col { grid-template-columns: 1fr; }
-      .feat { border-right: none; border-bottom: 1px solid var(--border); }
-      .feat:last-child { border-bottom: none; }
+      nav ul { display: none; }
+      .two-col, .senserva-callout { grid-template-columns: 1fr; }
+      .cov-grid, .three-col { grid-template-columns: 1fr 1fr; }
+      .stats-row .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stats-row .stat:last-child { border-bottom: none; }
       footer .footer-top { flex-direction: column; }
+    }
+    @media (max-width: 560px) {
+      .cov-grid, .three-col { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -245,10 +279,10 @@
 <!-- TOP BAR -->
 <div class="top-bar">
   <div class="top-bar-left">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAALYElEQVR4nO3daWwc5R3H8ZndmT28a+/a8UUcx4nj2AmJkzg2hjQoKAd3CdACIrSAKOoLpL4AtaioSFWrqlKrIrWVqqKKCERFooQWEQo0gFMuQ0xcCIlzx2d8xnbstZ3d9d7TF6kgsdeztv/zzPPs+vd5BWZ49on8VXZnnplnZankexLAfFl4TwDSGwICEgQEJAgISBAQkCAgIEFAQIKAgAQBAQkCAhIEBCQICEgQEJAgICBBQECCgIAEAQEJAgISBAQkCAhIEBCQICAgQUBAgoCABAEBCQICEgQEJAgISBAQkCAgIEFAQIKAgAQBAQkCAhIEBCQICEgQEJAgICBBQECCgIAEAQEJAgISBAQkCAhIEBCQICAgQUBAgoCABAEBCQICEgQEJAgISBAQkCAgIFFMeI0sd2Tl+otLqy5le0MOZ9SEV2QkFFQnfM7uc/mtLcWTAZX3dIQgM/3eeFd2eMu9Z+u2dVqtCXavYr543NLcsKLx7aqg38Z7LpwxDKik3Pfw003ZnhCj8bkbH3Xu+9OmgQte3hPhidVnoJJy3xO/+DSD65EkyZM3+cTznxYvHec9EZ6YBOTKCe96uklR4ywGF4rNHtv1zGGnK8J7ItwwCeiWnWfdGf13z9U8eZM3f/c871lwY3xAWdmRum0dhg8rshtva0vrs0sK4wOq3DBgsWqGDysyRUmsXH+R9yz4MD6gssoRw8cUX9mqS7ynwIfxAWXnTho+pvgWzme+KYwPSFEz6prhLCm2hfinllgEdNnnMHxM8fnHFuKfWmIR0FBfjuFjim+4L5v3FPgwPqBzR68zfEzxnflqMe8p8GF8QMP9OV3n8g0fVmRtJ4tGB928Z8GH8QFpmnRo/1ptwVwJSiTkQ/vX8p4FN0yWMnrb8xr2V7MYWUAHX1t/sdvDexbcsFqNb3pv5ccHVjMaXBCaJh16fc1//1POeyI8sb2hbFVt/x27WrwFQXYvwcvooPvgnnWtx4t5T4QztgFJkqQoibU39ayu7V9aNZIBtz0E/bYL5/LPfLn41JEl8TjuKGcf0NUUNe7ISuNV61BQjUWtvGeRnCxLVTUDdds6cvImw0G1pan0WGNZNMJ8tqYGBIzIsnT7Iy033dZ29Q+7zhbs/eOmSIjtcxP4SzgT1G9vn1KPJEnLVg3veOAU65dGQGnPmx/c/lDyUDZsuWCzx5i+OgJKb7Is3f3YsZkqsdljThfbD50IKL2tqe/VvxkyFmP7K0ZAaczpitz5w+M6B3ScLgxM2JnOAQGlsdsePunKCesc0Ph2Fes5IKB0tXz1cM2WLp0DjjWWdZ4uYD0NMzZXULJs+evKvatK7bnZalYa37kXDUyGfX7fme5LLZ3xEM+r6qotfs8TX+scELhs/2CfGevZbANSnPbl920qu7Peogp6AXcelt5RFw9HL/y7ueudL2JBPhltufdsXpFf54D39qwzZ+MHhgFlLy3c8LMHnAUZeKuD1a6W37+5+DvXf/2Hfwb6zH6gp6h0fPOdes/CtrYUnfyi1JzJsAoou6yw/lePWh2ZvPtJVlHujb95rPmXr/p7kz8KpyiJtZt6Spb7ZFlrO1nUeqyYvv5qsWg7nzyq8+hmJKy8+2qNaTf0MQlIdTtqnn0ws+u5QnHaa559qOm5l2OTU8+GcgsCjz/X6M3//60sdds6+zpz97ywmfjOUr+jvWS5T+eAD9+4fuxSFuUl5oTJWVj5fZsdixbKsxnOQu+ye26a8kPVFn/s5599U88VJct9jz77maLM/wkyb35w2wOndQ7o68xtblgx7/HnwfiAVLej9PaNhg8rsrK7blCc1/y9srq2P7cgMP3I65aNbX9wngucsizdNfOqhSRJiYT89ssbEwl5fuPPj/EBFdRUWBQzrg6Iw2pX89dfc2Nr6coZNwjYdEfriurBebzKmvreSt1Vi8MHK82/O9v4gHJXm/T5Xyi515dd/a9x3RWo+3/8lStb7wrydClXLUaHXJ8cWDWnMQ1hfED23IX4jKbde81zYe2nCnUOdntCO390VJ7LW03KVYt3Xqkx4f7D6YwPyGpfiPvfWu3XvGu3tRTpv5tUbRyo3do5y8Fns2rRcVovWXaMDyjs07tCmqnCY9d8ZNY0+c2/3aB/K8Xtu1oKFl9OObI4qxZJGR+Qv3chbrUU6Jv6qXmwN6dB9/eq2uLff6o55Vm9OKsWSTF4Nv5oq+Fjim/oy3PTf9h8aEVrS5HO/1W8dFz/rF6oVYukGOwP1D081tpn+LAiGz19IdA/Ov3nmia9tbtO/5YunbN60VYtkmJwJVrTWvd+ZPywwtK01r0fz/Qf/eP2A7tr9QeY6axetFWLpJgsZfjO9rT9o5HFyAI6v/ej8fZ+nQNajxfrLy+4PaGdT049q/csEm7VIilWdyR2vPl51ztHGA0ujo43D3e925zysIbX1+pv3FZVM1C39dvNtWVZuvtx4VYtkmJ2S6umnd/z4Ym//Cs8nmRJKAOER/3H/3yg7fVPpFl8BolGrG/8tT7FWf0jJwpKJq78s5irFkkxf7TZalcX37KuqL7SW7UkA9bIErGY70zPUPP5vk9bEpG5PbN3463t+ssRF7s9u3+9VbXHfvK7Bp3rzqNDrhef38HluvN0Jj4bL8uqy6G60vue6GggPJu/cpKSZekHP/28Qnclten9Coczpn/d+e+/v5nXdefpsLmCqdye8FO/PTTXldSrHWssS3laZyY81mMq/7j9rZfm/+vnu2qRFAIy2/lUZ/U6+K5aJIWAOEh5Vp8U91WLpBAQB9GI9Y0XU6zVTyHCqkVSCIiPwR7PnHaXFmHVIikExM2Rhoq2E3pr9d8QZNUiKQTEjaZJB16qDVxOsf2KOKsWSZlxaVi2WpwFHkd+juK0WVSzb3jVElo8FIn6J4MDvmhArC/D84873tpd+8gzh3WOOXxwpSCrFkkx3sLTavFUlngrSyyqAIsYG6TQpYmRls7QaOobSU1z/lhx86Hy+h3Jv6Z4dMj1idgb/jN8C1OznUturclbUyZEPZIkSZIjP6dk2/q8NWXSnB6JYKxhf/VMZ/W8nrWYPVYB2XKylmxdr7qdjManyF1dWlhbwXsW34pGrK+9sHmwd2pDH+yrFmfNayZM1sIsqnXJ9o2qm+3ufEQjxzuFuvXW7oxuvf/MiupBmyM21ONper+iQ/fhMkEwCWhR9TJv1RLDhzVWIpbofu9LvhuNZQDj38IsqtVTkQbf/2hRLN6VJbxnkfaMDyireJFsTY/LS66ShfXVnCwY/5t2FqbNzkCq265kibW4nXaMD0hxCP3ZeYr0mq2AjA9IVtLj/esKWRH6Kov4jP9lx0Pp9JVyOAsjMj6gyETafEOqFk/EAiHes0hvxgcUHEjylLiYJofGE/H5b3kJEpP9gcb86bJF0ESn3sN7MBtMPvCOnOhiMayxQiMTgf4Zt8KEWWIS0OTQ2NjZHhYjGyUejg4e0dt3B2aJ1Sn3yKnuiXZB3yDiocjAZ6djQXx8NgCzO3U0bfjrtvDY5bzqZVabQNtuBi/6ho+28vqWnczD/NFmi6rklBe7F+fbF7lTH81MIhILDIxevjA4OTTOcRqZx7xn42WrxWpXrabfnahpWiwUmetOGjBL5v06tXgiFgzHpPnvKwACSqd1KxAQAgISBAQkCAhIEBCQICAgQUBAgoCABAEBCQICEgQEJAgISBAQkCAgIEFAQIKAgAQBAQkCAhIEBCQICEgQEJAgICBBQECCgIAEAQEJAgISBAQkCAhIEBCQICAgQUBAgoCABAEBCQICEgQEJAgISBAQkCAgIEFAQIKAgAQBAQkCAhIEBCQICEgQEJAgICBBQECCgIAEAQEJAgISBAQkCAhIEBCQICAgQUBAgoCABAEByf8AshVpPw2zHVQAAAAASUVORK5CYII=" style="height:14px;width:auto;flex-shrink:0;border-radius:2px;opacity:.7" alt="">
-    Open-source data by <a href="https://patchcurated.org">&nbsp;PatchCurated.org</a> &nbsp;·&nbsp; A <a href="https://senserva.com">Senserva</a> project
+    <img src="data:image/png;base64,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" style="height:16px;width:auto;flex-shrink:0;border-radius:2px;opacity:.85" alt="">
+    An open-source project by <a href="https://senserva.com" target="_blank">&nbsp;Senserva</a> &nbsp;·&nbsp; Microsoft <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank">MISA</a> member
   </div>
-  <div><a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank">MISA member →</a></div>
+  <div><a href="https://senserva.com" target="_blank">senserva.com →</a></div>
 </div>
 
 <!-- EARLY BANNER -->
@@ -259,303 +293,381 @@
 
 <!-- NAV -->
 <nav>
-  <a href="https://patchcured.com">
-    <img src="data:image/png;base64,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" style="height:36px;width:auto" alt="PatchCured">
+  <a href="https://patchcurated.org">
+    <img src="data:image/png;base64,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" style="height:41px;width:auto" alt="PatchCurated">
   </a>
-  <ul class="nav-links">
-    <li><a href="#scanner">Scanner</a></li>
-    <li><a href="#checks">Security Checks</a></li>
+  <ul>
+    <li><a href="#data">The Data</a></li>
+    <li><a href="#scanner">The Scanner</a></li>
     <li><a href="#commands">Commands</a></li>
-    <li><a href="#ai">AI Analysis</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="https://github.com/patchcured" class="nav-cta" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcured</a></li><li><a href="https://github.com/patchcurated" class="nav-cta" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;background:var(--blue)"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcurated</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+    <li><a href="#origin">Origin</a></li>
+    <li><a href="https://github.com/patchcurated" class="nav-cta" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcurated</a></li><li><a href="https://github.com/patchcured" class="nav-cta" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;background:var(--blue)"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcured</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
 
-  <div class="hero-pill"><span class="pulse"></span> FREE · WINDOWS · MAC · LINUX · NO AGENT · NO CLOUD</div>
+  <div class="hero-pill"><span class="dot"></span> OPEN SOURCE · MIT + CC BY 4.0 · patchcurated.org</div>
 
   <h1>
-    Find the gaps.<br>
-    <span class="accent">Cure It.</span><br>
-    <span class="dim">Move on.</span>
+    Open patch intelligence<br>
+    <span class="accent">for every platform.</span><br>
+    <span class="dim">Free to use. Free to build on.</span>
   </h1>
 
   <p class="hero-sub">
-    Patch management got complicated — expensive tools, vendor lock-in, cloud dependencies.
-    PatchCured makes it a verb again. Download, run as administrator, read the output.
-    Missing patches, security misconfigurations, and suspicious events in one pass.
+    38 sources. 25,000+ applications. Windows, macOS, and Linux.
+    A portable SQLite database anyone can query — and a free scanner built on top of it.
+    Patch management got complicated — expensive tools, vendor lock-in, cloud dependencies. PatchCured makes it a verb again: find the gaps, <strong style="color:var(--green)">Cure It</strong>, move on.
+    Works standalone or alongside Windows Update, Windows Autopatch, Ivanti, SCCM, Intune, and any existing patching tool.
   </p>
 
   <div class="hero-actions">
-    <a href="https://github.com/patchcured" class="btn btn-g">Download cured.exe →</a>
-    <a href="#scanner" class="btn btn-o">See What It Checks</a>
-    <a href="#commands" class="btn btn-n">CLI Reference</a>
+    <a href="#data" class="btn btn-g">Get the Data →</a>
+    <a href="#scanner" class="btn btn-o">PatchCured Scanner</a>
+    <a href="https://github.com/patchcurated" class="btn btn-n" style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcurated</a><a href="https://github.com/patchcured" class="btn btn-n" style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> patchcured</a>
   </div>
 
-  <div class="req-strip">
-    <div class="req"><span class="req-v">Windows</span><span class="req-l">10 / 11 / Server</span></div>
-    <div class="req"><span class="req-v">macOS</span><span class="req-l">12+ Monterey</span></div>
-    <div class="req"><span class="req-v">Linux</span><span class="req-l">Ubuntu · Debian · RHEL</span></div>
-    <div class="req"><span class="req-v">.NET 10</span><span class="req-l">Runtime required</span></div>
-    <div class="req"><span class="req-v">Admin</span><span class="req-l">Required to scan</span></div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n">25K+</div><div class="stat-l">Applications</div></div>
+    <div class="stat"><div class="stat-n">38</div><div class="stat-l">Data Sources</div></div>
+    <div class="stat"><div class="stat-n">40K+</div><div class="stat-l">Detection Rules</div></div>
+    <div class="stat"><div class="stat-n">30K+</div><div class="stat-l">CVEs Tracked</div></div>
+    <div class="stat"><div class="stat-n">1,200+</div><div class="stat-l">CISA KEV</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Platforms</div></div>
   </div>
-</section>
 
-<!-- THREE FEATURES -->
-<section id="scanner" style="padding-top:0;padding-bottom:80px">
-  <div class="three-col">
-    <div class="feat">
-      <span class="feat-tag">Patches</span>
-      <h3>Missing patch detection</h3>
-      <p>File version probes, registry supplement, and MSI database detection across 25,000+ applications. Supersedence resolved automatically — direct KB-to-KB and composite file version chains.</p>
-    </div>
-    <div class="feat">
-      <span class="feat-tag">Configuration</span>
-      <h3>Security misconfiguration</h3>
-      <p>12 registry-based checks — WDigest, LSA Protection, SMBv1, LLMNR, UAC, firewall, RDP NLA, auto-logon credentials, PowerShell v2, unquoted service paths, credential caching, guest account.</p>
-    </div>
-    <div class="feat">
-      <span class="feat-tag">Events</span>
-      <h3>Suspicious event detection</h3>
-      <p>8 event log queries over the last 7 days — failed logons with source IPs, account lockouts, RDP sessions, admin group changes, audit log cleared, new services, new local accounts.</p>
-    </div>
-  </div>
-</section>
-
-<!-- TERMINAL + QUICK START -->
-<section style="background:rgba(255,255,255,.016);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="label">Quick Start</div>
-  <h2>No config. No agent. Run it.</h2>
-  <p class="sub">Three ways to scan. Pick the one that fits your workflow.</p>
-
-  <div class="two-col">
-    <div class="terminal">
-      <div class="term-bar"><div class="tdot dr"></div><div class="tdot dy"></div><div class="tdot dg"></div><div class="term-title">cured.exe</div></div>
-      <div class="term-body">
-        <div class="tcm">Scan this machine — run as administrator</div>
-        <div class="tc">cured</div>
-        <br>
-        <div class="to tg">MISSING PATCHES (3)</div>
-        <div class="to"><span class="to2">CRITICAL </span> KB5049981 — 2025-01 CU Windows 11</div>
-        <div class="to"><span class="to2">CRITICAL </span> KB5034441 — .NET Framework 4.8.1</div>
-        <div class="to"><span style="color:#f5c842">IMPORTANT</span> Chrome-132 — Google Chrome</div>
-        <br>
-        <div class="to tg">SECURITY CONFIG (2 findings)</div>
-        <div class="to"><span class="to2">CRITICAL </span> SEC-003 LSA Protection disabled</div>
-        <div class="to"><span style="color:#f5c842">IMPORTANT</span> SEC-005 SMBv1 enabled</div>
-        <br>
-        <div class="to tg">SECURITY EVENTS (7 days)</div>
-        <div class="to"><span style="color:#f5c842">IMPORTANT</span> EVT-001 47 failed logon attempts</div>
-        <br>
-        <div class="tcm">Sync fresh data then scan</div>
-        <div class="tc">cured --refresh</div>
-        <br>
-        <div class="tcm">Scan a remote machine</div>
-        <div class="tc">cured remote 192.168.1.50</div>
-        <br>
-        <div class="tcm">Export for AI — no API key needed</div>
-        <div class="tc">cured --export-ai scan.md</div>
-      </div>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 22px">
-        <span class="label" style="margin-bottom:8px">Option 1 — Pre-built database</span>
-        <p style="color:var(--muted);font-size:.82rem;line-height:1.6">Download <code>cured.exe</code> and <code>patches.db</code> from the repo. Point the scanner at the database. No build step, no sync required. Ideal for getting started immediately.</p>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 22px">
-        <span class="label" style="margin-bottom:8px">Option 2 — Sync before scanning</span>
-        <p style="color:var(--muted);font-size:.82rem;line-height:1.6">Run <code>cured --refresh</code> to pull the latest data from all 38 sources, then scan. One command. Always current. Requires internet on first run.</p>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 22px">
-        <span class="label" style="margin-bottom:8px">Option 3 — Air-gap</span>
-        <p style="color:var(--muted);font-size:.82rem;line-height:1.6">Sync once on an internet-connected machine, clone to a compact copy with superseded patches stripped, move the single <code>.db</code> file to USB. No internet at scan time. Use <code>cured-local.exe</code> — remote scanning code compiled out.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECURITY CHECKS TABLE -->
-<section id="checks">
-  <div class="label">Security Configuration Checks</div>
-  <h2>SEC-001 through SEC-012</h2>
-  <p class="sub">Registry-based checks run on every scan. No agents, no WMI, no external calls.</p>
-
-  <div class="checks-wrap">
-    <table>
-      <thead><tr><th>Check</th><th>What It Catches</th><th>Severity</th></tr></thead>
-      <tbody>
-        <tr><td>SEC-001</td><td style="color:var(--text)">AutoAdminLogon with plaintext credentials stored in registry</td><td class="sev-c">Critical</td></tr>
-        <tr><td>SEC-002</td><td style="color:var(--text)">WDigest enabled — plaintext passwords cached in LSASS memory</td><td class="sev-c">Critical</td></tr>
-        <tr><td>SEC-003</td><td style="color:var(--text)">LSA Protection (RunAsPPL) disabled — LSASS unprotected</td><td class="sev-c">Critical</td></tr>
-        <tr><td>SEC-004</td><td style="color:var(--text)">Windows Firewall disabled on any profile (domain, private, public)</td><td class="sev-i">Important</td></tr>
-        <tr><td>SEC-005</td><td style="color:var(--text)">SMBv1 still enabled — exploited by WannaCry and most ransomware</td><td class="sev-i">Important</td></tr>
-        <tr><td>SEC-006</td><td style="color:var(--text)">UAC disabled or set to never notify</td><td class="sev-i">Important</td></tr>
-        <tr><td>SEC-007</td><td style="color:var(--text)">LLMNR enabled — susceptible to name poisoning / credential capture</td><td class="sev-i">Important</td></tr>
-        <tr><td>SEC-008</td><td style="color:var(--text)">Remote Desktop allowed without Network Level Authentication</td><td class="sev-i">Important</td></tr>
-        <tr><td>SEC-009</td><td style="color:var(--text)">PowerShell v2 available — bypasses constrained language mode and logging</td><td class="sev-m">Moderate</td></tr>
-        <tr><td>SEC-010</td><td style="color:var(--text)">Unquoted service paths — local privilege escalation vector</td><td class="sev-m">Moderate</td></tr>
-        <tr><td>SEC-011</td><td style="color:var(--text)">Excessive cached logon count — credential exposure risk offline</td><td class="sev-m">Moderate</td></tr>
-        <tr><td>SEC-012</td><td style="color:var(--text)">Guest account enabled</td><td class="sev-m">Moderate</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- COMMANDS -->
-<section id="commands" style="background:rgba(255,255,255,.016);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="label">CLI Reference</div>
-  <h2>All commands</h2>
-  <p class="sub">Everything <code>cured.exe</code> can do. Most flags can be combined.</p>
-
-  <div class="cmd-grid">
-    <div class="cmd-card">
-      <span class="cmd-name">cured</span>
-      <p>Scan local machine. Missing patches, SEC-001–012 checks, and 7-day event log analysis. Run as administrator.</p>
-      <div class="flags"><span class="flag">--severity</span><span class="flag">--json</span><span class="flag">--html</span><span class="flag">--verbose</span></div>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured --refresh</span>
-      <p>Sync patch database from all 38 sources then scan immediately. One command to always scan with fresh data.</p>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured --export-ai &lt;file&gt;</span>
-      <p>Export scan results as an AI-ready markdown file with a prompt template. No API key required. Paste into any AI chat.</p>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured --ai-key &lt;key&gt;</span>
-      <p>Inline AI analysis — adds a prioritized plain-text remediation plan directly to the scan output.</p>
-      <div class="flags"><span class="flag">env:VAR</span><span class="flag">file:path</span></div>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured --json</span>
-      <p>Output results as JSON for scripting, SIEM ingestion, or piping into PowerShell with <code>ConvertFrom-Json</code>.</p>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured --list-apps</span>
-      <p>List all detected applications with versions and detection method. No patch check performed.</p>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured remote &lt;host&gt;</span>
-      <p>Scan a remote Windows machine over C$ admin shares. No agent, no WinRM, no WMI required.</p>
-      <div class="flags"><span class="flag">--credentials</span></div>
-    </div>
-    <div class="cmd-card">
-      <span class="cmd-name">cured repo sync</span>
-      <p>Incremental patch database refresh. Only fetches what changed since last sync using ETags and date cursors.</p>
-      <div class="flags"><span class="flag">--db &lt;path&gt;</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- POWERSHELL -->
-<section>
-  <div class="label">PowerShell Module</div>
-  <h2>Native objects. Pipe anywhere.</h2>
-  <p class="sub">Wraps <code>cured.exe --json</code> and returns real PowerShell objects. Filter, sort, export to CSV, or feed into Intune detection scripts.</p>
-
-  <div class="two-col">
-    <div class="terminal">
-      <div class="term-bar"><div class="tdot dr"></div><div class="tdot dy"></div><div class="tdot dg"></div><div class="term-title">PowerShell</div></div>
-      <div class="term-body">
-        <div class="tc">Import-Module Netchk25</div>
-        <div class="tc">$r = Invoke-Netchk25Scan</div>
-        <br>
-        <div class="tcm">Filter critical missing patches</div>
-        <div class="tc">$r.missingPatches |</div>
-        <div class="to">&nbsp;&nbsp;Where-Object severity -eq 'Critical' |</div>
-        <div class="to">&nbsp;&nbsp;Format-Table kbArticleId, title</div>
-        <br>
-        <div class="tcm">Security findings that are failing</div>
-        <div class="tc">$r.securityFindings |</div>
-        <div class="to">&nbsp;&nbsp;Where-Object finding -eq $true |</div>
-        <div class="to">&nbsp;&nbsp;Format-Table checkId, name, severity</div>
-        <br>
-        <div class="tcm">Intune detection script — exit 1 if critical</div>
-        <div class="tc">$r = Invoke-Netchk25Scan -Severity Critical</div>
-        <div class="tc">if ($r.missingPatches.Count -gt 0) { exit 1 }</div>
-        <br>
-        <div class="tcm">Export for AI — no API key</div>
-        <div class="tc">Export-Netchk25ForAi -Path scan.md</div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
-        <span class="cmd-name">Invoke-Netchk25Scan</span>
-        <p style="color:var(--muted);font-size:.8rem;line-height:1.55;margin-top:6px">Scan local machine. Returns object with <code>missingPatches</code>, <code>securityFindings</code>, <code>eventFindings</code>, and <code>summary</code>.</p>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
-        <span class="cmd-name">Get-Netchk25Apps</span>
-        <p style="color:var(--muted);font-size:.8rem;line-height:1.55;margin-top:6px">All detected applications with versions, vendor, and detection method used.</p>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
-        <span class="cmd-name">Export-Netchk25ForAi</span>
-        <p style="color:var(--muted);font-size:.8rem;line-height:1.55;margin-top:6px">Scan and export as AI-ready <code>.md</code> or <code>.csv</code>. No API key needed. Paste into any AI chat.</p>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
-        <span class="cmd-name">Get-Netchk25Analysis</span>
-        <p style="color:var(--muted);font-size:.8rem;line-height:1.55;margin-top:6px">Scan plus inline AI analysis in one command. Requires Anthropic API key.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AI SECTION -->
-<section id="ai" style="background:rgba(255,255,255,.016);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="ai-panel">
+  <div class="senserva-callout">
     <div>
-      <span class="label">AI Analysis</span>
-      <h2>Prioritized remediation.<br>No API key required.</h2>
-      <p class="sub" style="margin-bottom:24px">PatchCured can analyze your scan results with AI two ways — free with no setup, or automated with an API key. Either way you get a plain-English remediation plan ranked by risk.</p>
-      <a href="https://github.com/patchcured" class="btn btn-g">Download Free →</a>
+      <h3>Built and maintained by <span style="color:var(--green)">Senserva</span></h3>
+      <p>Senserva is a Microsoft security company and member of the <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank" style="color:var(--green)">Microsoft Intelligent Security Association (MISA)</a> — an invite-only program for independent software vendors building best-in-class security solutions on Microsoft technology. PatchCurated is our open-source foundation. PatchCured is the free scanner built on it. More tools coming.</p>
     </div>
-    <div class="ai-options">
-      <div class="ai-opt">
-        <span class="ai-opt-label">Free — no API key</span>
-        <h4>Export and paste</h4>
-        <p>Run <code>cured --export-ai scan.md</code>. The output file includes your full scan results plus a ready-to-use prompt. Paste into Claude.ai, ChatGPT, Copilot, or any AI chat. Works immediately, costs nothing.</p>
-      </div>
-      <div class="ai-opt" style="border-color:rgba(128,188,0,.25)">
-        <span class="ai-opt-label">Automated — API key</span>
-        <h4>Inline analysis</h4>
-        <p>Add <code>--ai-key env:ANTHROPIC_KEY</code> and the remediation plan appears directly in your scan output. Pipe into JSON, include in scripts, or run in CI. Key can come from an environment variable or a file.</p>
-      </div>
+    <div class="sc-products">
+      <a href="https://senserva.com" target="_blank" class="sc-product">
+        <div class="pn">Senserva</div><div class="pd">Microsoft 365 &amp; Azure security auditing</div>
+        <div class="pb">senserva.com</div>
+      </a>
+      <a href="https://patchcured.com" target="_blank" class="sc-product">
+        <img src="data:image/png;base64,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" style="height:38px;width:auto;margin-bottom:4px" alt="PatchCured">
+        <div class="pd" style="margin-top:2px">Free patch scanner &amp; remediation</div>
+        <div class="pb">patchcured.com</div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ABOUT / ORIGIN -->
-<section id="about">
-  <div class="label">Origin</div>
-  <h2>25 years in the making.</h2>
-  <p class="sub">Built by the creator of HFNetChk and MBSA. Free, agentless, command-line patch scanning — the way it was always meant to be.</p>
-
-  <div class="two-col">
-    <div class="quote-card">
-      <blockquote>"On the 25th anniversary of launching HFNetChk I'm back in patch management. The original was free, ran from a command line, and helped millions of administrators find missing patches with no agent and no vendor lock-in. That was the right idea then. It's still the right idea now."</blockquote>
-      <div class="quote-attr">
-        <strong>Mark Shavlik</strong>
-        Creator of HFNetChk (1999) and MBSA · Founder, Senserva
-      </div>
+<!-- TAB SECTION: DATA + SCANNER -->
+<div class="tab-section" id="data">
+  <div class="inner">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('data-tab',this)">PatchCurated — The Data</button>
+      <button class="tab-btn" onclick="switchTab('scanner-tab',this)" id="scanner-tab-btn">PatchCured — The Scanner</button>
     </div>
 
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="senserva-card">
-        <span class="sc-label">Built by Senserva</span>
-        <h4>Microsoft security. 25 years of practice.</h4>
-        <p>Senserva builds Microsoft 365 and Azure security products. PatchCured is built on <a href="https://patchcurated.org" style="color:var(--green)">PatchCurated.org</a> — the open-source patch database maintained by the community. Senserva is a member of the <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank" style="color:var(--green)">Microsoft Intelligent Security Association (MISA)</a>, an invite-only program for ISVs building security solutions on Microsoft technology.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a href="https://senserva.com" target="_blank" class="btn btn-n" style="font-size:.78rem;padding:7px 14px">senserva.com →</a>
-          <a href="https://patchcurated.org" class="btn btn-o" style="font-size:.78rem;padding:7px 14px">PatchCurated.org →</a>
+    <!-- DATA TAB -->
+    <div id="data-tab" class="tab-pane active">
+      <div class="label">Open Data Repository</div>
+      <h2>One database. 38 sources. Any tool can use it.</h2>
+      <p class="sub">A single portable SQLite file updated on your schedule. Use the pre-built database, sync it yourself, or build new sources and contribute them back.</p>
+
+      <div class="two-col" style="margin-bottom:48px">
+        <div class="terminal">
+          <div class="term-bar"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><div class="term-title">curated CLI</div></div>
+          <div class="term-body">
+            <div class="tcm">Full sync from all 38 sources</div>
+            <div class="tc">curated repo init</div>
+            <br>
+            <div class="to"><span class="tg">✓</span> MSRC API        <span class="tg">4,200 patches</span></div>
+            <div class="to"><span class="tg">✓</span> WinGet          <span class="tg">4,712 apps</span></div>
+            <div class="to"><span class="tg">✓</span> Homebrew Cask   <span class="tg">5,041 apps</span></div>
+            <div class="to"><span class="tg">✓</span> NVD / OSV       <span class="tg">CVEs enriched</span></div>
+            <div class="to"><span class="tt">…</span> 34 more sources</div>
+            <br>
+            <div class="to tg">Done — 21,847 patches · 41,320 rules</div>
+            <br>
+            <div class="tcm">Incremental refresh (daily/weekly)</div>
+            <div class="tc">curated repo sync</div>
+            <br>
+            <div class="tcm">Compact scan-ready copy (40–50% smaller)</div>
+            <div class="tc">curated repo clone scan-ready.db</div>
+            <div class="to">Removed <span class="to2">1,350</span> superseded patches</div>
+            <div class="to tg">8.2 MB — was 14.7 MB</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:13px">
+          <div class="card"><h3>Pre-built database</h3><p>Download <code>patches.db</code> directly from the repo. No build step. Open with any SQLite client or point <code>cured.exe</code> straight at it.</p></div>
+          <div class="card"><h3>Air-gap ready</h3><p>Sync once, clone to a compact copy with superseded patches stripped, move the single <code>.db</code> file to USB. No internet required at scan time.</p></div>
+          <div class="card"><h3>Build on it</h3><p>Open SQLite schema — query directly, integrate into your own tooling, or pipe through PowerShell. Commercial use is free with attribution to <code>patchcurated.org</code>.</p></div>
         </div>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
-        <span class="label" style="margin-bottom:6px">Data source</span>
-        <p style="color:var(--muted);font-size:.8rem;line-height:1.6">PatchCured scans against <a href="https://patchcurated.org" style="color:var(--green)">PatchCurated</a> — an open SQLite database covering 25,000+ applications across 38 sources. Use the pre-built database, sync it yourself, or contribute new sources back to the community.</p>
+
+      <!-- Coverage -->
+      <div class="label">Coverage</div>
+      <h2 style="margin-bottom:36px">Every major platform. Every major app.</h2>
+      <div class="cov-grid">
+        <div class="cov-cell">
+          <div class="cov-plat">Windows</div><div class="cov-num" style="color:var(--green)">29</div>
+          <div class="cov-desc">Sources · ~20,000+ apps</div>
+          <div class="tags"><span class="tag tg-g">MSRC API</span><span class="tag tg-g">Windows CUs</span><span class="tag tg-g">Update Catalog</span><span class="tag">WinGet 4,700+</span><span class="tag">Chrome</span><span class="tag">Firefox</span><span class="tag">Office 365</span><span class="tag">Java</span><span class="tag">Adobe</span><span class="tag">+ 20 more</span></div>
+        </div>
+        <div class="cov-cell">
+          <div class="cov-plat">macOS</div><div class="cov-num" style="color:var(--teal)">4</div>
+          <div class="cov-desc">Sources · ~5,000+ apps</div>
+          <div class="tags"><span class="tag tg-t">Apple Security</span><span class="tag tg-t">Safari</span><span class="tag tg-t">Xcode</span><span class="tag">Homebrew Cask 5,000+</span></div>
+        </div>
+        <div class="cov-cell">
+          <div class="cov-plat">Linux</div><div class="cov-num" style="color:var(--blue)">3</div>
+          <div class="cov-desc">Sources · Ubuntu, Debian, RHEL</div>
+          <div class="tags"><span class="tag tg-b">Ubuntu USN</span><span class="tag tg-b">Debian Tracker</span><span class="tag tg-b">Red Hat CVE API</span></div>
+        </div>
+        <div class="cov-cell">
+          <div class="cov-plat">CVE Enrichment</div><div class="cov-num" style="color:var(--orange)">3</div>
+          <div class="cov-desc">Sources · ~30,000 CVEs</div>
+          <div class="tags"><span class="tag tg-o">NVD / NIST</span><span class="tag tg-o">OSV / Google</span><span class="tag tg-o">GitHub Advisory</span><span class="tag">CVSS v3 + v4</span><span class="tag">EPSS</span><span class="tag">CISA KEV</span></div>
+        </div>
+        <div class="cov-cell">
+          <div class="cov-plat">Detection Rules</div><div class="cov-num">40K+</div>
+          <div class="cov-desc">Across all platforms</div>
+          <div class="tags"><span class="tag">FileVersion</span><span class="tag">RegistryKey</span><span class="tag">MsiProductCode</span><span class="tag">BundleVersion</span><span class="tag">PackageVersion</span></div>
+        </div>
+        <div class="cov-cell">
+          <div class="cov-plat">Database</div><div class="cov-num" style="font-size:1.3rem;letter-spacing:-.01em">SQLite</div>
+          <div class="cov-desc">Single portable file</div>
+          <div class="tags"><span class="tag">50–100 MB full</span><span class="tag">WAL mode</span><span class="tag">Air-gap ready</span><span class="tag">3–8 min sync</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCANNER TAB -->
+    <div id="scanner-tab" class="tab-pane" id="scanner">
+      <div class="label">PatchCured Scanner</div>
+      <h2>No agent. No cloud account. No config required.</h2>
+      <p class="sub">Download <code>cured.exe</code>, run as administrator, read the output. Missing patches, security misconfigurations, and suspicious events in one pass. Find what's wrong — <strong style="color:var(--green)">Cure It</strong>. Built on PatchCurated data.</p>
+
+      <div class="two-col" style="margin-bottom:56px">
+        <div class="terminal">
+          <div class="term-bar"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><div class="term-title">cured.exe</div></div>
+          <div class="term-body">
+            <div class="tcm">Scan this machine</div>
+            <div class="tc">cured</div>
+            <br>
+            <div class="to tg">MISSING PATCHES (3)</div>
+            <div class="to"><span class="to2">CRITICAL</span>  KB5049981 — 2025-01 CU for Windows 11</div>
+            <div class="to"><span class="to2">CRITICAL</span>  KB5034441 — .NET Framework 4.8.1</div>
+            <div class="to"><span style="color:#f5c842">IMPORTANT</span> Chrome-132 — Google Chrome 132.x</div>
+            <br>
+            <div class="to tg">SECURITY CONFIG (2 findings)</div>
+            <div class="to"><span class="to2">CRITICAL</span>  SEC-003 LSA Protection disabled</div>
+            <div class="to"><span style="color:#f5c842">IMPORTANT</span> SEC-005 SMBv1 still enabled</div>
+            <br>
+            <div class="to tg">SECURITY EVENTS (7 days)</div>
+            <div class="to"><span style="color:#f5c842">IMPORTANT</span> EVT-001 47 failed logon attempts</div>
+            <br>
+            <div class="tcm">JSON output for scripting</div>
+            <div class="tc">cured --json | ConvertFrom-Json</div>
+            <br>
+            <div class="tcm">AI-ready export — paste into any AI chat</div>
+            <div class="tc">cured --export-ai scan.md</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:13px">
+          <div class="card"><h3>Missing patches</h3><p>File version probes, registry supplement, and MSI database detection. Supersedence resolved automatically — both direct (KB-to-KB) and composite (file versions already satisfied).</p></div>
+          <div class="card"><h3>Security configuration</h3><p>12 registry-based checks: WDigest, LSA Protection, SMBv1, LLMNR, UAC, firewall, RDP, auto-logon credentials, PowerShell v2, unquoted paths, and more.</p></div>
+          <div class="card"><h3>Security events</h3><p>8 event log queries over the last 7 days — failed logons with source IPs, lockouts, RDP sessions, admin group changes, audit log cleared, new services, new accounts.</p></div>
+          <div class="card" style="border-color:rgba(0,27,82,.6);background:rgba(0,27,82,.18)"><h3>AI analysis — free, no key needed</h3><p>Export with <code>--export-ai</code> and paste into Claude.ai, ChatGPT, or Copilot. The file includes a prompt template. Or use <code>--ai-key</code> for inline automated analysis.</p></div>
+        </div>
+      </div>
+
+      <!-- SEC checks table -->
+      <div class="label">Security Configuration Checks</div>
+      <h2 style="margin-bottom:24px">SEC-001 through SEC-012</h2>
+      <div class="checks-wrap" style="margin-bottom:48px">
+        <table>
+          <thead><tr><th>Check</th><th>What It Catches</th><th>Severity</th></tr></thead>
+          <tbody>
+            <tr><td>SEC-001</td><td style="color:var(--text)">AutoAdminLogon with plaintext credentials in registry</td><td class="sev-c">Critical</td></tr>
+            <tr><td>SEC-002</td><td style="color:var(--text)">WDigest enabled — plaintext passwords cached in LSASS memory</td><td class="sev-c">Critical</td></tr>
+            <tr><td>SEC-003</td><td style="color:var(--text)">LSA Protection (RunAsPPL) disabled</td><td class="sev-c">Critical</td></tr>
+            <tr><td>SEC-004</td><td style="color:var(--text)">Windows Firewall disabled on any profile</td><td class="sev-i">Important</td></tr>
+            <tr><td>SEC-005</td><td style="color:var(--text)">SMBv1 still enabled — used by WannaCry and ransomware</td><td class="sev-i">Important</td></tr>
+            <tr><td>SEC-006</td><td style="color:var(--text)">UAC disabled or weakened</td><td class="sev-i">Important</td></tr>
+            <tr><td>SEC-007</td><td style="color:var(--text)">LLMNR enabled — name poisoning attack surface</td><td class="sev-i">Important</td></tr>
+            <tr><td>SEC-008</td><td style="color:var(--text)">Remote Desktop allowed without Network Level Authentication</td><td class="sev-i">Important</td></tr>
+            <tr><td>SEC-009</td><td style="color:var(--text)">PowerShell v2 available — bypasses constrained language mode and logging</td><td class="sev-m">Moderate</td></tr>
+            <tr><td>SEC-010</td><td style="color:var(--text)">Unquoted service paths — privilege escalation vector</td><td class="sev-m">Moderate</td></tr>
+            <tr><td>SEC-011</td><td style="color:var(--text)">Excessive credential caching (cached logon count)</td><td class="sev-m">Moderate</td></tr>
+            <tr><td>SEC-012</td><td style="color:var(--text)">Guest account enabled</td><td class="sev-m">Moderate</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PowerShell -->
+      <div class="label">PowerShell Module</div>
+      <h2 style="margin-bottom:16px">Native PowerShell objects. Pipe anywhere.</h2>
+      <p class="sub">The module wraps <code>cured.exe --json</code> and returns real PowerShell objects — filter, sort, export to CSV, or feed into Intune detection scripts.</p>
+      <div class="two-col" style="margin-bottom:16px">
+        <div class="terminal">
+          <div class="term-bar"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><div class="term-title">PowerShell</div></div>
+          <div class="term-body">
+            <div class="tc">Import-Module Netchk25</div>
+            <div class="tc">$r = Invoke-Netchk25Scan</div>
+            <br>
+            <div class="tcm">Filter critical patches</div>
+            <div class="tc">$r.missingPatches |</div>
+            <div class="to">&nbsp;&nbsp;Where-Object severity -eq 'Critical' |</div>
+            <div class="to">&nbsp;&nbsp;Format-Table kbArticleId, title</div>
+            <br>
+            <div class="tcm">Security findings that failed</div>
+            <div class="tc">$r.securityFindings |</div>
+            <div class="to">&nbsp;&nbsp;Where-Object finding -eq $true |</div>
+            <div class="to">&nbsp;&nbsp;Format-Table checkId, name, severity</div>
+            <br>
+            <div class="tcm">Export for AI — no key needed</div>
+            <div class="tc">Export-Netchk25ForAi</div>
+            <br>
+            <div class="tcm">Intune detection script (exit 1 if critical)</div>
+            <div class="tc">$r = Invoke-Netchk25Scan -Severity Critical</div>
+            <div class="tc">if ($r.missingPatches.Count -gt 0) { exit 1 }</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:13px">
+          <div class="card"><h3>Invoke-Netchk25Scan</h3><p>Scan local machine. Returns object with <code>missingPatches</code>, <code>securityFindings</code>, <code>summary</code>, and optional <code>aiAnalysis</code>.</p></div>
+          <div class="card"><h3>Get-Netchk25Apps</h3><p>All detected applications with versions, vendor, and detection method.</p></div>
+          <div class="card"><h3>Export-Netchk25ForAi</h3><p>Scan and export as AI-ready <code>.md</code> or <code>.csv</code>. No API key. Paste into any AI chat.</p></div>
+          <div class="card"><h3>Get-Netchk25Analysis</h3><p>Scan plus inline AI analysis in one command. Requires Anthropic API key.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMANDS -->
+<section id="commands">
+  <div class="label">CLI Reference</div>
+  <h2>All commands — both tools</h2>
+  <p class="sub">The <code>curated</code> binary manages the database. The <code>cured</code> binary scans machines. Both share the <code>repo</code> subcommand and the global <code>--db</code> flag.</p>
+
+  <p style="font-family:'Ubuntu Mono',monospace;font-size:.75rem;color:var(--teal);margin-bottom:20px;max-width:1100px">cured — scanner</p>
+  <div class="cmd-grid" style="margin-bottom:36px">
+    <div class="cmd-card"><div class="cmd-name">cured</div><p>Scan local machine. Missing patches, security configuration, and event log analysis. Run as administrator.</p><div class="flags"><span class="flag">--severity</span><span class="flag">--json</span><span class="flag">--html</span><span class="flag">--verbose</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">cured --refresh</div><p>Sync the patch database (init if none exists), then scan. One command to always scan with fresh data.</p></div>
+    <div class="cmd-card"><div class="cmd-name">cured --export-ai &lt;file&gt;</div><p>Export scan results as an AI-ready markdown or CSV file. No API key. Paste into Claude.ai, ChatGPT, Copilot, or any AI chat.</p></div>
+    <div class="cmd-card"><div class="cmd-name">cured --ai-key &lt;key&gt;</div><p>Inline AI analysis — adds a prioritized plain-text remediation plan directly to the scan output. Key can be <code>env:VAR</code> or <code>file:path</code>.</p></div>
+    <div class="cmd-card"><div class="cmd-name">cured --list-apps</div><p>List all detected applications with versions and detection method. No patch check.</p></div>
+    <div class="cmd-card"><div class="cmd-name">cured remote &lt;host&gt;</div><p>Scan a remote Windows machine over C$ admin shares. No agent, no WinRM, no WMI required.</p><div class="flags"><span class="flag">--credentials</span></div></div>
+  </div>
+
+  <p style="font-family:'Ubuntu Mono',monospace;font-size:.75rem;color:var(--teal);margin-bottom:20px;max-width:1100px">curated repo — database management</p>
+  <div class="cmd-grid">
+    <div class="cmd-card"><div class="cmd-name">repo init</div><p>Full pull from all 38 sources. Creates schema and populates from scratch. Run once.</p><div class="flags"><span class="flag">--db &lt;path&gt;</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">repo sync</div><p>Incremental refresh using ETags and date cursors. Only fetches what changed. Schedule daily or weekly.</p><div class="flags"><span class="flag">--db &lt;path&gt;</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">repo status</div><p>Database stats: patch count, vendors, detection rules, CVEs, last sync time, and file size.</p></div>
+    <div class="cmd-card" style="border-color:rgba(128,188,0,.3)"><div class="cmd-name" style="color:var(--teal)">repo clone &lt;output&gt;</div><p>Compact scan-ready copy — superseded patches stripped. Typically 40–50% smaller. Ideal for endpoints and air-gap deployment.</p><div class="flags"><span class="flag">--db &lt;path&gt;</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">repo cve &lt;cve-id&gt;</div><p>CVE lookup — which patches address it, affected products, CVSS score, EPSS, and CISA KEV status.</p></div>
+    <div class="cmd-card"><div class="cmd-name">repo enrich</div><p>Enrich CVEs with CVSS, CWE, EPSS, and CISA KEV from NVD, OSV, and GitHub Advisory.</p></div>
+    <div class="cmd-card"><div class="cmd-name">repo export</div><p>Export as signed JSON for GitHub Pages hosting. Creates <code>manifest.json</code> + <code>manifest.sig</code>.</p><div class="flags"><span class="flag">--output</span><span class="flag">--key</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">repo clone</div><p>Download a hosted repository (Azure Table) into local SQLite for fully offline scanning.</p><div class="flags"><span class="flag">--table-url</span><span class="flag">--sas</span></div></div>
+    <div class="cmd-card"><div class="cmd-name">repo keygen</div><p>Generate RSA-2048 key pair for signing exported patch data.</p><div class="flags"><span class="flag">--output &lt;dir&gt;</span></div></div>
+  </div>
+</section>
+
+<!-- CONTRIBUTE -->
+<section style="background:rgba(255,255,255,.016);border-top:1px solid var(--border);border-bottom:1px solid var(--border)" id="contribute">
+  <div class="label">Contributing</div>
+  <h2>One file. One line. New source.</h2>
+  <p class="sub">Implement one C# interface, add one line to the engine. Scheduling, error isolation, progress display, and sync history are all handled automatically.</p>
+
+  <div class="two-col">
+    <div>
+      <div class="iface-box">
+        <div class="iface-hdr">IPatchSource — the full interface</div>
+        <div class="iface-body">
+          <div><span class="kw">public interface</span> <span class="sf">IPatchSource</span></div>
+          <div>{</div>
+          <div>&nbsp;&nbsp;<span class="st">string</span> <span class="sf">Name</span>        { <span class="kw">get</span>; }</div>
+          <div>&nbsp;&nbsp;<span class="st">string</span> <span class="sf">Description</span> { <span class="kw">get</span>; }</div>
+          <br>
+          <div>&nbsp;&nbsp;<span class="st">Task</span>&lt;<span class="sf">SyncResult</span>&gt; <span class="sf">SyncAsync</span>(</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="sf">PatchRepository</span> repo,</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">bool</span> incremental,</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">IProgress</span>&lt;<span class="st">string</span>&gt;? progress);</div>
+          <div>}</div>
+          <br>
+          <div><span class="sc">// Then one line in RepoSyncEngine.cs:</span></div>
+          <div><span class="kw">new</span> <span class="sf">MyAppSource</span>(),</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <a href="https://github.com/patchcurated" class="btn btn-g" style="font-size:.82rem;padding:9px 18px">Browse Repo →</a>
+        <a href="https://github.com/patchcurated/blob/main/CONTRIBUTING.md" class="btn btn-o" style="font-size:.82rem;padding:9px 18px">CONTRIBUTING.md</a>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;line-height:1.6"><strong style="color:var(--text)">Wanted data sources</strong></p>
+      <ul class="wanted" style="margin-bottom:28px">
+        <li><div><strong>More Linux distros</strong> — SUSE, Alpine, Arch, Rocky, Alma, Amazon Linux</div></li>
+        <li><div><strong>Linux package managers</strong> — Flatpak, Snap advisories</div></li>
+        <li><div><strong>Cloud CLI tools</strong> — AWS CLI, Azure CLI, gcloud, Terraform, kubectl</div></li>
+        <li><div><strong>Container images</strong> — Docker Hub official, distroless base images</div></li>
+        <li><div><strong>Windows / macOS apps</strong> — any public version API or release feed</div></li>
+        <li><div><strong>IoT / embedded</strong> — firmware tracking for network devices and printers</div></li>
+      </ul>
+
+      <p style="font-size:.85rem;color:rgba(255,255,255,.7);font-family:'Ubuntu',sans-serif;font-weight:600;margin-bottom:12px">Also open to contributors on:</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px">
+          <div><h3 style="font-size:.86rem;margin-bottom:3px">PatchCured scanner</h3><p style="font-size:.76rem">Detection rules, platform coverage, PowerShell module, reporting</p></div>
+          <a href="https://github.com/patchcured" class="btn btn-o" style="font-size:.72rem;padding:6px 14px;white-space:nowrap">Contribute →</a>
+        </div>
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px">
+          <div><h3 style="font-size:.86rem;margin-bottom:3px">Data quality</h3><p style="font-size:.76rem">Wrong versions, missing CVEs, bad detection rules</p></div>
+          <a href="https://github.com/patchcurated/issues" class="btn btn-o" style="font-size:.72rem;padding:6px 14px;white-space:nowrap">File Issue →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN -->
+<section id="origin">
+  <div class="label">Origin</div>
+  <h2>On the 25th anniversary of HFNetChk.</h2>
+  <p class="sub">The tools that created the patch management industry — and why a new one was overdue.</p>
+
+  <div class="two-col">
+    <div class="tl">
+      <div class="tl-item"><div class="tl-yr">1999</div><div><h3>HFNetChk</h3><p>Mark Shavlik releases the first agentless patch scanner for Windows NT. Free, command-line, no agent. Downloaded by millions of administrators worldwide.</p></div></div>
+      <div class="tl-item"><div class="tl-yr">2001</div><div><h3>Microsoft Baseline Security Analyzer</h3><p>Shavlik partners with Microsoft to build MBSA — free GUI tool combining HFNetChk's engine with OS configuration checks. Part of the Windows 2000 Server Toolkit. Scanned 3M+ computers per week at peak.</p></div></div>
+      <div class="tl-item"><div class="tl-yr">2003</div><div><h3>Shavlik Technologies</h3><p>HFNetChk grows into a full commercial patch management platform — scan, deploy, report, across physical and virtual environments.</p></div></div>
+      <div class="tl-item"><div class="tl-yr">2011–17</div><div><h3>VMware → LANDESK → Ivanti</h3><p>Shavlik Technologies acquired by VMware, then LANDESK, then merged into Ivanti. The HFNetChk lineage lives on in Ivanti's security portfolio. Mark Shavlik is not affiliated with Ivanti.</p></div></div>
+      <div class="tl-item"><div class="tl-yr">2025</div><div><h3>PatchCurated &amp; PatchCured</h3><p>On the 25th anniversary of launching HFNetChk, there is no public patch repository and no simple free scanner for it — and there should be. Same philosophy as the originals: open data, no agent, free to use. Patch management got complicated. PatchCured makes it a verb again — find the gaps, <strong style="color:var(--green)">Cure It</strong>, move on.</p></div></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div class="quote-card">
+        <blockquote>"On the 25th anniversary of launching HFNetChk I'm back in patch management. The original was free, ran from a command line, and helped millions of administrators find missing patches with no agent and no vendor lock-in. That was the right idea then. It's still the right idea now."</blockquote>
+        <div class="quote-attr">
+          <strong>Mark Shavlik</strong>
+          Creator of HFNetChk (1999) and MBSA · Founder, Senserva
+        </div>
+      </div>
+
+      <div class="senserva-card">
+        <div class="sc-label">About Senserva</div>
+        <h4>Security tooling rooted in 25 years of practice.</h4>
+        <p>Senserva builds Microsoft security products — 365 and Azure auditing with Siemserva, and now patch management with PatchCurated and PatchCured. Senserva is a member of the <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank" style="color:var(--green)">Microsoft Intelligent Security Association (MISA)</a>, an invite-only program for independent software vendors building best-in-class security solutions on Microsoft technology.</p>
+        <p>PatchCurated is the open foundation. PatchCured is the scanner. More tools from Senserva are coming — all built on the same community-maintained data layer.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="https://senserva.com" target="_blank" class="btn btn-n" style="font-size:.8rem;padding:8px 16px">senserva.com →</a>
+          <a href="https://patchcured.com" target="_blank" class="btn btn-o" style="font-size:.8rem;padding:8px 16px">PatchCured →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -563,13 +675,12 @@
 
 <!-- CTA -->
 <div class="cta">
-  <span class="label" style="display:block;margin-bottom:12px">Get Started</span>
-  <h2>Free. No account.<br>Run it in 60 seconds.</h2>
-  <p>Download <code>cured.exe</code>, run as administrator, read the output. That's it.</p>
+  <div class="label">Get Involved</div>
+  <h2>Open data. Free scanner.<br>Make both better.</h2>
+  <p>Use the database, run the scanner, add a source, report bad data. Every contribution helps more systems stay patched.</p>
   <div class="cta-actions">
-    <a href="https://github.com/patchcured" class="btn btn-g">Download Free →</a>
-    <a href="https://patchcurated.org" class="btn btn-n">PatchCurated Data →</a>
-    <a href="https://github.com/patchcured" class="btn btn-o">GitHub</a>
+    <a href="https://patchcured.com" class="btn btn-n">Try PatchCured Free →</a>
+    <a href="https://github.com/patchcurated/blob/main/CONTRIBUTING.md" class="btn btn-o">Contributing Guide</a>
   </div>
 </div>
 
@@ -577,26 +688,26 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <img src="data:image/png;base64,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" style="height:38px;width:auto" alt="PatchCured">
-      <p>Free patch scanner built on open data. A <a href="https://senserva.com" style="color:var(--green)">Senserva</a> project — <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank" style="color:rgba(255,255,255,.4)">MISA member</a>.</p>
+      <img src="data:image/png;base64,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" style="height:48px;width:auto;margin-bottom:10px" alt="PatchCurated">
+      <p>Community-driven patch intelligence. An open-source project by <a href="https://senserva.com" style="color:var(--green)">Senserva</a> — a <a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank" style="color:rgba(255,255,255,.45)">MISA member</a>.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
-        <h5>Scanner</h5>
+        <h5>Repository</h5>
         <ul>
-          <li><a href="https://github.com/patchcured">Download</a></li>
-          <li><a href="https://github.com/patchcured">GitHub</a></li>
-          <li><a href="https://github.com/patchcured/blob/main/POWERSHELL.md">PowerShell Module</a></li>
-          <li><a href="https://github.com/patchcured/blob/main/SCANNING.md">Scanner Architecture</a></li>
+          <li><a href="https://github.com/patchcurated">GitHub</a></li>
+          <li><a href="https://github.com/patchcurated/blob/main/SOURCES.md">Sources</a></li>
+          <li><a href="https://github.com/patchcurated/blob/main/REPOSITORY.md">Database Schema</a></li>
+          <li><a href="https://github.com/patchcurated/blob/main/CONTRIBUTING.md">Contributing</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Data</h5>
+        <h5>Scanner</h5>
         <ul>
-          <li><a href="https://patchcurated.org">PatchCurated.org</a></li>
-          <li><a href="https://github.com/patchcurated">Data Repo</a></li>
-          <li><a href="https://github.com/patchcurated/blob/main/SOURCES.md">38 Sources</a></li>
-          <li><a href="https://github.com/patchcurated/blob/main/CONTRIBUTING.md">Contribute</a></li>
+          <li><a href="https://patchcured.com">PatchCured</a></li>
+          <li><a href="https://github.com/patchcured">PatchCured GitHub</a></li>
+          <li><a href="https://github.com/patchcured/blob/main/POWERSHELL.md">PowerShell Module</a></li>
+          <li><a href="https://github.com/patchcured/blob/main/SCANNING.md">Scanner Architecture</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -604,18 +715,40 @@
         <ul>
           <li><a href="https://senserva.com">senserva.com</a></li>
           <li><a href="https://www.microsoft.com/en-us/security/business/intelligent-security-association" target="_blank">MISA Member</a></li>
+          <li><a href="https://shavlikfamilyfoundation.org" target="_blank">Shavlik Foundation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Docs</h5>
+        <ul>
+          <li><a href="#data">Quick Start</a></li>
+          <li><a href="#commands">CLI Reference</a></li>
+          <li><a href="#scanner">Scanner Features</a></li>
+          <li><a href="#origin">Origin</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Senserva, LLC. PatchCured is a trademark of Senserva, LLC. Free tier: MIT license. Built on PatchCurated data (CC BY 4.0).</p>
+    <p>© 2025 Senserva, LLC. PatchCurated and PatchCured are trademarks of Senserva, LLC. Source code: MIT. Patch data: CC BY 4.0 with attribution to patchcurated.org.</p>
     <div class="fbadges">
-      <div class="fbadge"><span class="fbk">free tier</span><span class="fbv-g">MIT</span></div>
+      <div class="fbadge"><span class="fbk">code</span><span class="fbv-g">MIT</span></div>
       <div class="fbadge"><span class="fbk">data</span><span class="fbv-b">CC BY 4.0</span></div>
     </div>
   </div>
 </footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'scanner-tab') {
+      document.getElementById('scanner').scrollIntoView ? null : null;
+    }
+  }
+</script>
 
 </body>
 </html>
