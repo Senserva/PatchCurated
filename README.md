@@ -1,191 +1,387 @@
-# Contributing to PatchCurated
+# PatchCurated
 
-Thanks for your interest in contributing. PatchCurated lives or dies by its data coverage — every new source you add means more applications monitored, more CVEs caught, and more systems kept patched.
+**Community-driven patch intelligence for Windows, macOS, and Linux.**
 
----
+PatchCurated is an open patch data repository and the builder that populates it. It aggregates security update metadata, detection rules, supersedence chains, and CVE enrichment from **38 sources** into a single portable SQLite database — covering ~25,000+ applications across all three major platforms.
 
-## Ways to Contribute
+The database is the open data layer that [PatchCured](https://github.com/patchcured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
 
-- **Add a new patch source** — the highest-value contribution (see below)
-- **Improve an existing source** — better CVE extraction, more detection rules, bug fixes
-- **Expand Linux coverage** — new distros, package managers (Flatpak, Snap, Alpine, etc.)
-- **Report bad data** — wrong versions, missing patches, incorrect detection rules
-- **Fix bugs** — open an issue or submit a PR
-- **Improve documentation** — clarify anything that was confusing
+Built by [Mark Shavlik](https://github.com/mshavlik), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry.
 
 ---
 
-## Adding a New Patch Source
+## What's in This Repository
 
-This is the core contribution. The interface is minimal — one C# file, one line in the engine.
+| Component | Description |
+|-----------|-------------|
+| `data/` | Pre-built SQLite patch database (`patches.db`) updated regularly |
+| `src/` | The sync engine and all 38+ source implementations (C#) |
+| `SOURCES.md` | Full documentation of every data source |
+| `REPOSITORY.md` | Database schema, detection rule types, and query examples |
 
-### Step 1 — Implement `IPatchSource`
+Both the data and the code that builds it live here. You can use the pre-built database directly, run the builder yourself, or contribute new sources.
 
-Create a new file in `src/Sources/` named after your source (e.g., `SlackSource.cs`):
+---
+
+## Coverage
+
+| Platform | Sources | Applications / Packages |
+|----------|:-------:|:-----------------------:|
+| Windows | 29 | ~20,000+ |
+| macOS | 4 | ~5,000+ |
+| Linux | 3 | Ubuntu, Debian, RHEL/CentOS |
+| CVE enrichment | 3 | NVD, OSV, GitHub Advisory |
+| **Total** | **38 + 3** | **~25,000+ unique apps** |
+
+| Metric | Typical Value |
+|--------|:-------------:|
+| Patch entries | ~20,000+ rows |
+| Detection rules | ~40,000+ rows |
+| CVEs tracked | ~30,000+ |
+| CISA KEV (actively exploited) | ~1,200+ |
+| Database size | 50–100 MB |
+| Full sync time | 3–8 minutes |
+
+---
+
+## Quick Start
+
+```bash
+# First time — full pull from all 38 sources
+curated repo init
+
+# Later — incremental refresh (only what changed)
+curated repo sync
+
+# Check what you have
+curated repo status
+```
+
+Or just use the pre-built database from `data/patches.db` — no build step required.
+
+### Air-Gap Workflow
+
+The database is a single `.db` file you can copy anywhere:
+
+1. On a connected machine: `curated repo init`
+2. Copy `patches.db` to a USB drive
+3. Use it on the air-gapped machine — no internet needed at scan time
+
+---
+
+## Repository Builder — Command Reference
+
+All repository management is under the `repo` subcommand.
+
+### Global Option
+
+```
+--db <path>    Path to the SQLite database file
+               Default: patches.db in the current directory
+```
+
+---
+
+### `repo init`
+
+Full pull from all 38 sources. Creates the schema and populates everything from scratch. Run this once.
+
+```bash
+curated repo init
+curated repo init --db D:\patching\patches.db
+```
+
+---
+
+### `repo sync`
+
+Incremental refresh — only fetches changes since the last sync. Sources that support ETags or date cursors skip unchanged data. Run this on a schedule to keep the database current.
+
+```bash
+curated repo sync
+curated repo sync --db D:\patching\patches.db
+```
+
+---
+
+### `repo status`
+
+Shows database statistics: total patch entries, vendors covered, detection rule count, CVE count, last sync time, and database file size.
+
+```bash
+curated repo status
+```
+
+---
+
+### `repo cve <cve-id>`
+
+Look up a specific CVE. Shows which patches address it, affected products, and CVSS score if enriched.
+
+```bash
+curated repo cve CVE-2025-21418
+curated repo cve CVE-2024-43572 --db patches.db
+```
+
+---
+
+### `repo enrich`
+
+Enrich CVEs in the database with CVSS scores, severity ratings, CWE classifications, EPSS exploitation probability, and CISA KEV status. Pulls from NVD (NIST), OSV (Google), and GitHub Advisory Database.
+
+Optional environment variables to increase API rate limits:
+- `NVD_API_KEY` — raises NVD from 5 to 50 requests per 30 seconds
+- `GITHUB_TOKEN` — raises GitHub Advisory from 60 to 5,000 requests per hour
+
+```bash
+curated repo enrich
+```
+
+---
+
+### `repo export`
+
+Export the local SQLite database as signed JSON files organized by bundle (`os`, `office`, `general`). Creates `manifest.json` and `manifest.sig` when a signing key is provided. Use this to publish the data to GitHub Pages or any static host so PatchCured scanners can consume it.
+
+```
+--output <dir>    Output directory for exported files  (required)
+--key <path>      Path to RSA private key PEM file for signing
+                  Also reads NETCHK25_SIGNING_KEY environment variable
+```
+
+```bash
+curated repo export --output ./dist --key signing-key.pem
+```
+
+---
+
+### `repo download`
+
+Download a hosted patch repository (Azure Table Storage) into a local SQLite database. After download, scanning works fully offline with zero cloud dependency.
+
+```
+--table-url <url>    Azure Table URL for the patch repository  (required)
+--sas <token>        SAS token with read permission           (required)
+--api-key <key>      Senserva API key (for the public repo)
+--db <path>          Output database path
+```
+
+```bash
+curated repo download --table-url https://... --sas "?sv=..." --db patches.db
+```
+
+---
+
+### `repo keygen`
+
+Generate an RSA-2048 key pair for signing patch data exports. Produces `signing-key.pem` (private, keep secret) and `signing-key-public.pem` (distribute with the scanner).
+
+```
+--output <dir>    Directory for key files (default: current directory)
+```
+
+```bash
+curated repo keygen --output ./keys
+```
+
+---
+
+### `repo clone <o>`
+
+Creates a compact, scan-ready copy of the database containing only active (non-superseded) patches. Superseded patches, their detection rules, sync history, and sync state are stripped out — producing a smaller file ideal for distributing to endpoints or air-gapped environments.
+
+The cloned database is fully functional for scanning but cannot be incrementally synced (no sync state is included). To update it, re-clone from a freshly synced source.
+
+```
+<o>            Path for the cloned database file  (required)
+--db <path>    Source database (default: patches.db in current directory)
+```
+
+```bash
+# Clone the default repository
+curated repo clone scan-ready.db
+
+# Clone a specific source database
+curated repo clone --db D:\full\patches.db D:\deploy\patches.db
+```
+
+Typical output:
+
+```
+Cloning repository (active patches only)...
+  Source: patches.db
+  Total patches: 4,200  (superseded: 1,350)
+
+Clone complete: scan-ready.db
+  Active patches: 2,850
+  Size: 8.2 MB (was 14.7 MB — 44% smaller)
+```
+
+What is copied: active patches, detection rules for those patches, CVE links and enrichment data for active patches only, and schema metadata (`cloned_from`, `cloned_utc`). What is **not** copied: `sync_history`, `sync_state`, and superseded patch data. The clone uses SQLite `ATTACH DATABASE` to copy directly between files without loading into memory.
+
+**Deployment workflows:**
+
+```bash
+# Sync, clone, distribute to a network share
+curated repo sync
+curated repo clone \\deploy\share\patches.db
+
+# Air-gapped transfer — copy the single .db file to USB
+curated repo sync
+curated repo clone E:\transfer\patches.db
+
+# CI/CD pipeline
+curated repo clone $BUILD_ARTIFACTS/patches.db
+```
+
+| | Full Repository | Cloned Repository |
+|---|---|---|
+| Active patches | All | All |
+| Superseded patches | Retained | Removed |
+| Detection rules | All | Active patches only |
+| CVE enrichment | All | Active patches only |
+| Sync history | Full log | Not included |
+| Sync state | Incremental cursors | Not included |
+
+See [SCANNING.md](SCANNING.md) for how supersedence resolution works in the scanner.
+---
+
+## Database Schema
+
+Five tables: `patches`, `detection_rules`, `sync_history`, `sync_state`, `repo_metadata`.
+
+The `patches` table stores one row per patch per product per version. A single KB article can have multiple rows if it applies to different product versions. The upsert logic merges data from multiple sources — non-empty values overwrite blanks, but never erase existing data.
+
+See [REPOSITORY.md](REPOSITORY.md) for the full schema, detection rule types, and example SQL queries.
+
+### Detection Rule Types
+
+| Platform | Rule Type | What It Checks |
+|----------|-----------|----------------|
+| Windows | `FileVersion` | PE file version of an EXE or DLL |
+| Windows | `RegistryKey` | Whether a registry key exists |
+| Windows | `RegistryValue` | A registry value compared to an expected version |
+| Windows | `MsiProductCode` | An installed MSI product by GUID |
+| Windows | `UninstallDisplayVersion` | Version from Add/Remove Programs (wildcard support) |
+| macOS | `BundleVersion` | `CFBundleShortVersionString` from an app bundle |
+| macOS | `PlistValue` | A key from any `.plist` file |
+| Linux | `PackageVersion` | Installed package version via `dpkg` or `rpm` |
+
+---
+
+## What the Data Covers
+
+### Windows — 29 Sources
+
+- **Microsoft OS & Infrastructure** — MSRC API, Windows cumulative updates, Microsoft Update Catalog, WSUS cab, Edge, Office 365, .NET, Teams
+- **Bulk App Repository** — WinGet (~4,700+ apps from `microsoft/winget-pkgs`)
+- **Browsers** — Chrome (with CVE extraction), Firefox (with MFSA data)
+- **Communication** — Zoom (with security bulletins), Slack
+- **Enterprise & Security** — Java/Adoptium, Adobe Acrobat/Reader, PuTTY, WinSCP
+- **IT Utilities** — 7-Zip, WinRAR, Notepad++, FileZilla, VLC, Wireshark, KeePass, OBS Studio
+- **Developer Tools** — VS Code, Node.js, Python, Git, PowerShell, curl, OpenSSH
+
+### macOS — 4 Sources
+
+- **Apple System** — macOS security updates (Sequoia, Sonoma, Ventura, Monterey, Big Sur)
+- **Apple Apps** — Safari, Xcode
+- **Bulk App Repository** — Homebrew Cask (~5,000+ macOS GUI applications)
+
+### Linux — 3 Sources
+
+- **Ubuntu** — Ubuntu Security Notices (USN) via the Canonical Security API
+- **Debian** — Full Debian Security Tracker (Bookworm, Trixie, Bullseye)
+- **Red Hat / RHEL / CentOS / Fedora** — Red Hat Security Data API with CVE and RPM data
+
+### CVE Enrichment — 3 Sources
+
+| Field | Source |
+|-------|--------|
+| CVSS v3.x / v4.0 score | NVD, GitHub Advisory |
+| CVSS vector string | NVD, OSV, GitHub Advisory |
+| CWE weakness classification | NVD, OSV, GitHub Advisory |
+| EPSS exploitation probability | NVD |
+| CISA KEV (actively exploited) | NVD |
+| Human-readable description | NVD, OSV, GitHub Advisory |
+
+---
+
+## Sync Architecture
+
+All 38 sources run concurrently with up to 8 parallel workers. A failure in one source does not block any other — each runs inside its own try/catch and the sync history table records every outcome. After all sources finish, a summary shows patches added, rules created, sources that succeeded, and any failures.
+
+The only dependency: `WindowsCU` waits for `MSRC` to finish (it needs MSRC's severity data before processing cumulative updates).
+
+Incremental sync uses ETags, date cursors, or both per source — so after the first `init`, `sync` only fetches what changed. WinGet's 4,700+ packages sync in batches of 500 per transaction and finish in seconds.
+
+---
+
+## Contributing
+
+Adding a new source requires two steps:
+
+1. Create one C# file in `src/Sources/` implementing `IPatchSource`:
 
 ```csharp
-public class MyAppSource : IPatchSource
+public interface IPatchSource
 {
-    public string Name        => "MyApp";
-    public string Description => "MyApp releases from myapp.com/releases";
-
-    public async Task<SyncResult> SyncAsync(
+    string Name        { get; }
+    string Description { get; }
+    Task<SyncResult> SyncAsync(
         PatchRepository repo,
         bool incremental,
-        IProgress<string>? progress = null)
-    {
-        // 1. Fetch version data from upstream
-        // 2. Build PatchEntry objects
-        // 3. Call repo.UpsertAsync(entry) for each one
-        // 4. Return SyncResult with counts
-    }
+        IProgress<string>? progress = null);
 }
 ```
 
-### Step 2 — Register the source
+2. Add one line to the `_sources` list in `RepoSyncEngine.cs`.
 
-Add one line to the `_sources` list in `src/RepoSyncEngine.cs`:
+### Wanted Sources
 
-```csharp
-new MyAppSource(),
-```
+Community contributions are especially welcome for:
 
-That's it. The sync engine handles scheduling, error isolation, progress display, and history logging automatically.
+- **More Linux distributions** — SUSE, Alpine, Arch, Rocky, Alma, Amazon Linux
+- **Linux package managers** — Flatpak, Snap advisories
+- **Cloud CLI tools** — AWS CLI, Azure CLI, gcloud, Terraform, kubectl
+- **Container images** — Docker Hub official images, distroless base images
+- **Additional Windows / macOS apps** — anything with a public version API or release feed
+- **IoT / embedded** — firmware version tracking for network devices and printers
 
-### What makes a good source
+See [SOURCES.md](SOURCES.md) for the full source list and the interface details.
 
-- **A reliable public feed** — a JSON API, RSS feed, GitHub Releases API, or a stable download page. Avoid scraping pages that change layout frequently.
-- **Version data** — at minimum a version string and a release date.
-- **At least one FileVersion detection rule** — the file path and minimum version that confirms the patch is installed. FileVersion rules are the only ones evaluated by the scanner; other rule types (registry, MSI) are stored but not used for detection.
-- **Incremental support if possible** — check for an ETag or a `Last-Modified` header and skip unchanged data on subsequent syncs. Look at `ChromeSource.cs` or `WinGetSource.cs` for examples.
+### Get Involved
 
-### Existing sources to reference
-
-| Source | Good example of |
-|--------|----------------|
-| `ChromeSource.cs` | JSON API + CVE extraction from release notes |
-| `WinGetSource.cs` | Bulk YAML manifest parsing, ETag sync, batched inserts |
-| `FirefoxSource.cs` | Security advisory (MFSA) cross-referencing |
-| `NodeJsSource.cs` | Multiple release channels (LTS + Current) |
-| `UbuntuUsnSource.cs` | Linux PackageVersion rules, paginated API |
-| `GitHubReleaseHelper.cs` | Reusable helper for any GitHub Releases-backed app |
+Whether you want to contribute a new patch source, improve existing ones, or become a regular collaborator with write access — you're welcome here. Open an issue to introduce yourself or discuss an idea, or just submit a pull request. If you'd like to be added as a collaborator, reach out via an issue and we'll go from there.
 
 ---
 
-## Wanted Sources
+## License
 
-These are confirmed gaps — contributions for any of these are immediately useful:
+| Component | License |
+|-----------|---------|
+| Source code (`src/`) | [MIT](LICENSE-MIT) |
+| Patch data (`data/`) | [CC BY 4.0](LICENSE-DATA) — free to use, including commercially, with attribution |
 
-**Linux distributions**
-- SUSE / openSUSE
-- Alpine Linux
-- Arch Linux / Manjaro
-- Rocky Linux / Alma Linux / Oracle Linux
-- Amazon Linux
-
-**Linux package managers**
-- Flatpak (Flathub advisories)
-- Snap Store security notices
-
-**Cloud & DevOps tools**
-- AWS CLI
-- Azure CLI
-- gcloud SDK
-- Terraform / OpenTofu
-- kubectl / Helm
-
-**Container images**
-- Docker Hub official images
-- Distroless base images
-
-**Additional Windows / macOS apps**
-- Any application with a public version API, GitHub Releases feed, or stable release page
-
-**IoT / Embedded**
-- Network device firmware (routers, switches, printers)
+The data aggregated here is derived from public sources. Each upstream source has its own terms; see [SOURCES.md](SOURCES.md) for details. Red Hat CVE data is CC BY 4.0 licensed upstream.
 
 ---
 
-## Development Setup
+## About PatchCured
 
-### Prerequisites
+[PatchCured](https://github.com/patchcured) is the commercial patch scanner, with powerful free versions, and remediation tool built on PatchCurated data. Like HFNetChk and MBSA before it, PatchCured has a powerful free version — full patch scanning at no cost, with commercial features (fleet management, automated remediation, reporting, Azure integration) available in paid tiers. A [Senserva](https://senserva.com) product.
 
-- .NET 8 SDK or later
-- SQLite (for testing the database)
-
-### Build
-
-```bash
-dotnet build
-```
-
-### Run a full repo init locally
-
-```bash
-dotnet run -- repo init --db test.db
-```
-
-### Run tests
-
-```bash
-dotnet test
-```
-
-### Test your source in isolation
-
-The fastest way to test a new source is to call it directly in a small test program or unit test, passing a fresh in-memory `PatchRepository`. Look at the existing tests in `src/Tests/` for examples.
+Senserva is actively building additional patch scanners and remediation tools on top of PatchCurated data. PatchCurated is the shared foundation — one community-maintained data layer, multiple tools built on it.
 
 ---
 
-## Pull Request Guidelines
+## Origin
 
-- **One source per PR** — keeps reviews focused and makes it easy to merge or defer independently
-- **Include at least one detection rule** — a patch entry with no FileVersion rule will be stored but marked undetectable
-- **Test with `repo init`** — make sure your source runs cleanly end-to-end before submitting
-- **Handle failures gracefully** — wrap network calls in try/catch and return a `SyncResult` with `Success = false` and an error message rather than throwing
-- **No hardcoded credentials** — all API keys must come from environment variables
+In 1999, Mark Shavlik released **HFNetChk** — the first agentless patch scanner for Windows NT. Microsoft needed a tool to detect missing hotfixes across large NT server environments without installing any agent software. Shavlik built it: a command-line scanner that connected over the network, read file versions and registry keys, and reported which patches were missing. It was free.
 
----
+HFNetChk was downloaded and used by millions of administrators. Microsoft noticed. Shavlik partnered with Microsoft to build the **Microsoft Baseline Security Analyzer (MBSA)** — a free GUI tool delivered as part of the Windows 2000 Server Toolkit that combined HFNetChk's patch scanning engine with OS configuration checks for IIS, SQL Server, and Windows security settings. MBSA went on to scan over 3 million computers per week at its peak. It was the standard for patch compliance in enterprises worldwide for over a decade.
 
-## Reporting Bad Data
+Shavlik went on to found **Shavlik Technologies**, which turned HFNetChk into a full commercial patch management platform — scanning, deploying, and reporting across physical and virtual environments. Shavlik Technologies was acquired by VMware in 2011, then by LANDESK in 2013. LANDESK merged with HEAT Software in 2017 to form **Ivanti**. Today the same HFNetChk-lineage technology is a core part of Ivanti's security portfolio. Mark Shavlik is not affiliated with Ivanti.
 
-If you find a patch entry with a wrong version, a missing CVE, or a detection rule that doesn't work, open an issue with:
+After VMware, Mark founded [Senserva](https://senserva.com), focused on Microsoft 365 and Azure security auditing. Now, 25 years after HFNetChk, he's back in patch management with the 25th anniversary editions — because there is no public repository and simple scanner for it, and there should be.
 
-- The `patch_id` value from the database
-- What the data says vs. what it should say
-- A link to the upstream source confirming the correct value
-
----
-
-## Becoming a Collaborator
-
-If you've submitted a few good PRs and want to get more involved — direct commit access, helping review PRs, maintaining a group of sources — open an issue and introduce yourself. We're happy to add trusted contributors as collaborators.
-
----
-
-## Code of Conduct
-
-Be straightforward, be helpful, assume good intent. This is a technical project focused on doing useful work. Keep discussions on-topic and constructive.
-
----
-
-## Contributing to PatchCured
-
-PatchCurated is the data layer. [PatchCured](https://github.com/patchcured) is the free scanner built on top of it — and it needs help too.
-
-If you're interested in contributing to the scanner itself, the highest-value areas are:
-
-- **Detection rule coverage** — verifying and improving FileVersion rules for specific applications
-- **Platform support** — macOS and Linux scanning improvements
-- **Reporting** — new output formats, report templates, integrations
-- **Remediation workflows** — automated patch deployment for specific vendors and app types
-
-The PatchCured scanner uses the same `IPatchSource` interface and the same SQLite database. Contributing to PatchCurated data automatically makes PatchCured more accurate. Contributing to PatchCured scanning improves what anyone can build on PatchCurated data.
-
-Both projects are by [Senserva](https://senserva.com). Open issues on the respective repos or introduce yourself and we'll point you in the right direction.
-
----
-
-## Questions
-
-Open an issue with the `question` label. For anything sensitive, contact [mark@senserva.com](mailto:mark@senserva.com).
+**PatchCurated** is the open data layer he always wanted to exist: a community-maintained, vendor-neutral patch intelligence database covering Windows, macOS, and Linux — not locked to any vendor, not dependent on any cloud service. **PatchCured** is the scanner built on it, with the same philosophy as the originals: powerful, free to use and for pay versions that include remediation, and built for the people who actually have to keep systems patched.
