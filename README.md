@@ -4,7 +4,10 @@
 
 [![MISA Member](https://img.shields.io/badge/Microsoft%20MISA-Member-0078D4?logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
 
-[![MISA Member](https://img.shields.io/badge/MISA_Member-Microsoft_Intelligent_Security_Association-0078d4?style=flat&logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
+![Status](https://img.shields.io/badge/status-in%20development-orange)
+
+> **⚠️ Early Development** — PatchCurated is actively being built. Features, commands, output formats, and APIs are subject to change. Feedback and contributions welcome.
+
 
 PatchCurated is an open patch data repository and the builder that populates it. It aggregates security update metadata, detection rules, supersedence chains, and CVE enrichment from **38 sources** into a single portable SQLite database — covering ~25,000+ applications across all three major platforms.
 
