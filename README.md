@@ -2,11 +2,15 @@
 
 **Community-driven patch intelligence for Windows, macOS, and Linux.**
 
+[![MISA Member](https://img.shields.io/badge/Microsoft%20MISA-Member-0078D4?logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
+
+[![MISA Member](https://img.shields.io/badge/MISA_Member-Microsoft_Intelligent_Security_Association-0078d4?style=flat&logo=microsoft&logoColor=white)](https://www.microsoft.com/en-us/security/business/intelligent-security-association)
+
 PatchCurated is an open patch data repository and the builder that populates it. It aggregates security update metadata, detection rules, supersedence chains, and CVE enrichment from **38 sources** into a single portable SQLite database — covering ~25,000+ applications across all three major platforms.
 
 The database is the open data layer that [PatchCured](https://github.com/patchcured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
 
-Built by [Mark Shavlik](https://github.com/shavmark), CEO of Microsoft Intelligent Security Association member Senserva, creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry.
+Built by [Mark Shavlik](https://github.com/shavmark), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry. A [Senserva](https://senserva.com) project — a member of the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only ecosystem of independent software vendors building security solutions on Microsoft technology.
 
 ---
 
@@ -244,6 +248,7 @@ curated repo clone $BUILD_ARTIFACTS/patches.db
 | Sync state | Incremental cursors | Not included |
 
 See [SCANNING.md](SCANNING.md) for how supersedence resolution works in the scanner.
+
 ---
 
 ## Database Schema
@@ -382,6 +387,6 @@ HFNetChk was downloaded and used by millions of administrators. Microsoft notice
 
 Shavlik went on to found **Shavlik Technologies**, which turned HFNetChk into a full commercial patch management platform — scanning, deploying, and reporting across physical and virtual environments. Shavlik Technologies was acquired by VMware in 2011, then by LANDESK in 2013. LANDESK merged with HEAT Software in 2017 to form **Ivanti**. Today the same HFNetChk-lineage technology is a core part of Ivanti's security portfolio. Mark Shavlik is not affiliated with Ivanti.
 
-After VMware, Mark founded [Senserva](https://senserva.com), focused on Microsoft 365 and Azure security auditing. Now, 25 years after HFNetChk, he's back in patch management with the 25th anniversary editions — because there is no public repository and simple scanner for it, and there should be.
+After VMware, Mark founded [Senserva](https://senserva.com), focused on Microsoft 365 and Azure security auditing — and was accepted into the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only program for independent software vendors building best-in-class security solutions on Microsoft technology. Now, 25 years after HFNetChk, he's back in patch management with the 25th anniversary editions — because there is no public repository and simple scanner for it, and there should be.
 
 **PatchCurated** is the open data layer he always wanted to exist: a community-maintained, vendor-neutral patch intelligence database covering Windows, macOS, and Linux — not locked to any vendor, not dependent on any cloud service. **PatchCured** is the scanner built on it, with the same philosophy as the originals: powerful, free to use and for pay versions that include remediation, and built for the people who actually have to keep systems patched.
