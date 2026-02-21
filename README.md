@@ -6,7 +6,7 @@ PatchCurated is an open patch data repository and the builder that populates it.
 
 The database is the open data layer that [PatchCured](https://github.com/patchcured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
 
-Built by [Mark Shavlik](https://github.com/mshavlik), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry.
+Built by [Mark Shavlik](https://github.com/shavmark), CEO of Microsoft Intelligent Security Association member Senserva, creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry.
 
 ---
 
