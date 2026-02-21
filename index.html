@@ -157,7 +157,6 @@
     .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 1100px; }
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; transition: border-color .2s; }
     .card:hover { border-color: rgba(128,188,0,.35); }
-    .card-icon { font-size: 1.2rem; margin-bottom: 12px; }
     .card h3 { font-family: 'Ubuntu', sans-serif; font-weight: 600; font-size: .92rem; margin-bottom: 6px; }
     .card p { color: var(--muted); font-size: .81rem; line-height: 1.55; }
 
@@ -396,9 +395,9 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:13px">
-          <div class="card"><div class="card-icon">🗄️</div><h3>Pre-built database</h3><p>Download <code>patches.db</code> directly from the repo. No build step. Open with any SQLite client or point <code>cured.exe</code> straight at it.</p></div>
-          <div class="card"><div class="card-icon">✈️</div><h3>Air-gap ready</h3><p>Sync once, clone to a compact copy with superseded patches stripped, move the single <code>.db</code> file to USB. No internet required at scan time.</p></div>
-          <div class="card"><div class="card-icon">🔨</div><h3>Build on it</h3><p>Open SQLite schema — query directly, integrate into your own tooling, or pipe through PowerShell. Commercial use is free with attribution to <code>patchcurated.org</code>.</p></div>
+          <div class="card"><h3>Pre-built database</h3><p>Download <code>patches.db</code> directly from the repo. No build step. Open with any SQLite client or point <code>cured.exe</code> straight at it.</p></div>
+          <div class="card"><h3>Air-gap ready</h3><p>Sync once, clone to a compact copy with superseded patches stripped, move the single <code>.db</code> file to USB. No internet required at scan time.</p></div>
+          <div class="card"><h3>Build on it</h3><p>Open SQLite schema — query directly, integrate into your own tooling, or pipe through PowerShell. Commercial use is free with attribution to <code>patchcurated.org</code>.</p></div>
         </div>
       </div>
 
@@ -473,10 +472,10 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:13px">
-          <div class="card"><div class="card-icon">🔍</div><h3>Missing patches</h3><p>File version probes, registry supplement, and MSI database detection. Supersedence resolved automatically — both direct (KB-to-KB) and composite (file versions already satisfied).</p></div>
-          <div class="card"><div class="card-icon">🛡️</div><h3>Security configuration</h3><p>12 registry-based checks: WDigest, LSA Protection, SMBv1, LLMNR, UAC, firewall, RDP, auto-logon credentials, PowerShell v2, unquoted paths, and more.</p></div>
-          <div class="card"><div class="card-icon">📋</div><h3>Security events</h3><p>8 event log queries over the last 7 days — failed logons with source IPs, lockouts, RDP sessions, admin group changes, audit log cleared, new services, new accounts.</p></div>
-          <div class="card" style="border-color:rgba(0,27,82,.6);background:rgba(0,27,82,.18)"><div class="card-icon">🤖</div><h3>AI analysis — free, no key needed</h3><p>Export with <code>--export-ai</code> and paste into Claude.ai, ChatGPT, or Copilot. The file includes a prompt template. Or use <code>--ai-key</code> for inline automated analysis.</p></div>
+          <div class="card"><h3>Missing patches</h3><p>File version probes, registry supplement, and MSI database detection. Supersedence resolved automatically — both direct (KB-to-KB) and composite (file versions already satisfied).</p></div>
+          <div class="card"><h3>Security configuration</h3><p>12 registry-based checks: WDigest, LSA Protection, SMBv1, LLMNR, UAC, firewall, RDP, auto-logon credentials, PowerShell v2, unquoted paths, and more.</p></div>
+          <div class="card"><h3>Security events</h3><p>8 event log queries over the last 7 days — failed logons with source IPs, lockouts, RDP sessions, admin group changes, audit log cleared, new services, new accounts.</p></div>
+          <div class="card" style="border-color:rgba(0,27,82,.6);background:rgba(0,27,82,.18)"><h3>AI analysis — free, no key needed</h3><p>Export with <code>--export-ai</code> and paste into Claude.ai, ChatGPT, or Copilot. The file includes a prompt template. Or use <code>--ai-key</code> for inline automated analysis.</p></div>
         </div>
       </div>
 
