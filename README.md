@@ -12,7 +12,7 @@ The database is the open data layer that [PatchCured](https://github.com/Senserv
 
 PatchCurated and PatchCured work as standalone solutions or alongside your existing patching tools — complementing products like Ivanti, SCCM, Intune, and others with open, vendor-neutral data and scanning that isn't tied to any one vendor's ecosystem.
 
-Built by [Mark Shavlik](https://github.com/shavmark), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (1999) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry. A [Senserva](https://senserva.com) project — a member of the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only ecosystem of independent software vendors building security solutions on Microsoft technology.
+Built by [Mark Shavlik](https://github.com/shavmark), creator of [HFNetChk](https://en.wikipedia.org/wiki/HFNetChk) (2001) and co-creator of the [Microsoft Baseline Security Analyzer](https://en.wikipedia.org/wiki/Microsoft_Baseline_Security_Analyzer) — the tools that secured millions of computers and created the patch management industry. A [Senserva](https://senserva.com) project — a member of the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only ecosystem of independent software vendors building security solutions on Microsoft technology.
 
 ---
 
