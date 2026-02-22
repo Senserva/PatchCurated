@@ -8,7 +8,7 @@
 
 PatchCurated is an open patch data repository and the builder that populates it. It aggregates security update metadata, detection rules, supersedence chains, and CVE enrichment from **38 sources** into a single portable SQLite database — covering ~25,000+ applications across all three major platforms.
 
-The database is the open data layer that [PatchCured](https://github.com/patchcured) — the commercial scanner with a powerful free tier — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
+The database is the open data layer that [PatchCured](https://github.com/Senserva/PatchCured) — free patch scanner for Windows, macOS, and Linux, built on [PatchCurated](https://github.com/Senserva/PatchCurated) open data, with commercial remediation tiers — is built on. Any tool can use the data, as long as commercial tools give attribution to this site.
 
 PatchCurated and PatchCured work as standalone solutions or alongside your existing patching tools — complementing products like Ivanti, SCCM, Intune, and others with open, vendor-neutral data and scanning that isn't tied to any one vendor's ecosystem.
 
@@ -375,15 +375,15 @@ The data aggregated here is derived from public sources. Each upstream source ha
 
 ## About PatchCured
 
-[PatchCured](https://github.com/patchcured) is the commercial patch scanner, with powerful free versions, and remediation tool built on PatchCurated data. Like HFNetChk and MBSA before it, PatchCured has a powerful free version — full patch scanning at no cost, with commercial features (fleet management, automated remediation, reporting, Azure integration) available in paid tiers. A [Senserva](https://senserva.com) product.
+[PatchCured](https://github.com/Senserva/PatchCured) is the free patch scanner for Windows, macOS, and Linux — built on [PatchCurated](https://github.com/Senserva/PatchCurated) data, with commercial remediation tiers. Like HFNetChk and MBSA before it, PatchCured has a powerful free version — full patch scanning at no cost, with commercial features (fleet management, automated remediation, reporting, Azure integration) available in paid tiers. A [Senserva](https://senserva.com) product.
 
-Senserva is actively building additional patch scanners and remediation tools on top of PatchCurated data. PatchCurated is the shared foundation — one community-maintained data layer, multiple tools built on it.
+Senserva is actively building additional patch scanners and remediation tools on top of [PatchCurated](https://github.com/Senserva/PatchCurated) data. [PatchCurated](https://github.com/Senserva/PatchCurated) is the shared foundation — one community-maintained data layer, multiple tools built on it.
 
 ---
 
 ## Origin
 
-In 1999, Mark Shavlik released **HFNetChk** — the first agentless patch scanner for Windows NT. Microsoft needed a tool to detect missing hotfixes across large NT server environments without installing any agent software. Shavlik built it: a command-line scanner that connected over the network, read file versions and registry keys, and reported which patches were missing. It was free.
+In 2001, Mark Shavlik released **HFNetChk** — the first agentless patch scanner for Windows NT. Microsoft needed a tool to detect missing hotfixes across large NT server environments without installing any agent software. Shavlik built it: a command-line scanner that connected over the network, read file versions and registry keys, and reported which patches were missing. It was free.
 
 HFNetChk was downloaded and used by millions of administrators. Microsoft noticed. Shavlik partnered with Microsoft to build the **Microsoft Baseline Security Analyzer (MBSA)** — a free GUI tool delivered as part of the Windows 2000 Server Toolkit that combined HFNetChk's patch scanning engine with OS configuration checks for IIS, SQL Server, and Windows security settings. MBSA went on to scan over 3 million computers per week at its peak. It was the standard for patch compliance in enterprises worldwide for over a decade.
 
@@ -391,4 +391,4 @@ Shavlik went on to found **Shavlik Technologies**, which turned HFNetChk into a 
 
 After VMware, Mark founded [Senserva](https://senserva.com), focused on Microsoft 365 and Azure security auditing — and was accepted into the [Microsoft Intelligent Security Association (MISA)](https://www.microsoft.com/en-us/security/business/intelligent-security-association), an invite-only program for independent software vendors building best-in-class security solutions on Microsoft technology. Now, 25 years after HFNetChk, he's back in patch management with the 25th anniversary editions — because there is no public repository and simple scanner for it, and there should be.
 
-**PatchCurated** is the open data layer he always wanted to exist: a community-maintained, vendor-neutral patch intelligence database covering Windows, macOS, and Linux — not locked to any vendor, not dependent on any cloud service. **PatchCured** is the scanner built on it, with the same philosophy as the originals: powerful, free to use and for pay versions that include remediation, and built for the people who actually have to keep systems patched.
+**[PatchCurated](https://github.com/Senserva/PatchCurated)** is the open data layer he always wanted to exist: a community-maintained, vendor-neutral patch intelligence database covering Windows, macOS, and Linux — not locked to any vendor, not dependent on any cloud service. **PatchCured** is the scanner built on it, with the same philosophy as the originals: powerful, free to use and for pay versions that include remediation, and built for the people who actually have to keep systems patched.
